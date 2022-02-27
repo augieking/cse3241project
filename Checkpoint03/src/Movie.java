@@ -7,9 +7,9 @@ public class Movie extends Entity {
     public int length;
     public ArrayList<Actor> actors;
 
-    public Movie(int ID, int YEAR, String DIRECTOR, String GENRE, String TITLE,
+    public Movie(int YEAR, String DIRECTOR, String GENRE, String TITLE,
             int LENGTH, ArrayList<Actor> ACTORS) {
-        super(ID, YEAR);
+        super(YEAR);
         this.director = DIRECTOR;
         this.genre = GENRE;
         this.title = TITLE;

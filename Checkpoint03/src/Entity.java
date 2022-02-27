@@ -1,10 +1,11 @@
+import java.util.UUID;
 
 public class Entity {
-    public int id;
+    public UUID id;
     public int year;
 
-    public Entity(int id, int year) {
-        this.id = id;
+    public Entity(int year) {
+        this.id = UUID.randomUUID();
         this.year = year;
     }
 }

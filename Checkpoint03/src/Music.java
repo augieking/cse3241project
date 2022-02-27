@@ -6,9 +6,9 @@ public class Music extends Entity {
     public String songName;
     public ArrayList<String> artists;
 
-    public Music(int ID, int YEAR, int LENGTH, String ALBUMNAME,
-            String SONGNAME, ArrayList<String> ARTISTS) {
-        super(ID, YEAR);
+    public Music(int YEAR, int LENGTH, String ALBUMNAME, String SONGNAME,
+            ArrayList<String> ARTISTS) {
+        super(YEAR);
         this.length = LENGTH;
         this.albumName = ALBUMNAME;
         this.songName = SONGNAME;
