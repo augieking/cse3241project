@@ -1,0 +1,22 @@
+import java.util.ArrayList;
+
+public class Music implements Entity{
+	public int id;
+	public int year;
+	public int length;
+	public String albumName;
+	public String songName;
+	public ArrayList<String> artists;
+	
+	public Music(int ID, int YEAR, int LENGTH, String ALBUMNAME, String SONGNAME) {
+		id = ID;
+		year = YEAR;
+		length = LENGTH;
+		albumName = ALBUMNAME;
+		songName = SONGNAME;
+	}
+	
+	public void edit() {
+		
+	}
+}

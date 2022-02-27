@@ -1,0 +1,188 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Menu {
+		
+	public static int TOTALID;
+	public static ArrayList <Entity> entityList = new ArrayList<>();
+	public static ArrayList <Music> musicList = new ArrayList<>();
+	public static ArrayList <Movie> movieList = new ArrayList<>();
+	public static ArrayList <Audiobook> audiobookList = new ArrayList<>();
+
+	public static void addMusic(Scanner input) {
+		int id = TOTALID;
+		TOTALID++;
+		int year;
+		int length;
+		String albumName;
+		String songName;
+		ArrayList<String> artists = new ArrayList<>();
+		
+		System.out.print("Enter the year the song was released (must be int): ");
+		year = Integer.parseInt(input.nextLine());
+		System.out.print("Enter the length of the song (in seconds, must be int): ");
+		length = Integer.parseInt(input.nextLine());
+		System.out.print("Enter the name of the album that the song is on: ");
+		albumName = input.nextLine();
+		System.out.print("Enter the name of the song: ");
+		songName = input.nextLine();
+		
+		System.out.print("Would you like to enter the name of an artist (y/n): ");
+		String YN = input.nextLine();
+		while(YN.equals("Y") || YN.equals("y")) {
+			System.out.print("Enter the name of the artist: ");
+			String artistName = input.nextLine();
+
+			artists.add(artistName);
+			
+			System.out.print("Would you like to enter another artist (y/n): ");
+			YN = input.nextLine();
+		}
+		
+		Music music = new Music(id, year, length, albumName, songName, artists);
+		musicList.add(music);
+		entityList.add(music);
+		
+		//TEST
+		System.out.println("id: " + music.id);
+		System.out.println("year: " + music.year);
+		System.out.println("length: " + music.length);
+		System.out.println("albumName: " + music.albumName);
+		System.out.println("songName: " + music.songName);
+		for(int i = 0; i < artists.size(); i++) {
+			System.out.println("arist: " + music.artists.get(i));
+		}
+		//TEST
+
+	}
+	
+	public static void addMovie(Scanner input) {
+		int id = TOTALID;
+		TOTALID++;
+		int year;
+		String director;
+		String genre;
+		String title;
+		int length;
+		ArrayList<Actor> actors = new ArrayList<>();
+		
+		System.out.print("Enter the year the movie was released (must be int): ");
+		year = Integer.parseInt(input.nextLine());
+		System.out.print("Enter the director of the movie: ");
+		director = input.nextLine();
+		System.out.print("Enter the genre of the movie: ");
+		genre = input.nextLine();
+		System.out.print("Enter the title of the movie: ");
+		title = input.nextLine();
+		System.out.print("Enter the length of the movie (in minutes, must be int): ");
+		length = Integer.parseInt(input.nextLine());
+		
+		System.out.print("Would you like to enter an actor (y/n): ");
+		String YN = input.nextLine();
+		while(YN.equals("Y")) {
+			System.out.print("Enter the name of the actor: ");
+			String actorName = input.nextLine();
+			System.out.print("Enter the role of the actor: ");
+			String role = input.nextLine();
+			
+			Actor actor = new Actor(actorName, role);
+			actors.add(actor);
+			
+			System.out.print("Would you like to enter an actor (y/n): ");
+			YN = input.nextLine();
+		}
+		
+		Movie movie = new Movie(id, year, director, genre, title, length, actors);
+		movieList.add(movie);
+		entityList.add(movie);
+	}
+	
+	public static void addAudiobook(Scanner input) {
+		int id = TOTALID;
+		TOTALID++;
+		int year;
+		String title;
+		String genre;
+		int chapters;
+		int length;
+		ArrayList<String> authors = new ArrayList<>();
+		
+		System.out.print("Enter the year the audiobook was released (must be int): ");
+		year = Integer.parseInt(input.nextLine());
+		System.out.print("Enter the title of the audiobook: ");
+		title = input.nextLine();
+		System.out.print("Enter the genre of the audiobook: ");
+		genre = input.nextLine();
+		System.out.print("Enter the year the audiobook was released (must be int): ");
+		chapters = Integer.parseInt(input.nextLine());
+		System.out.print("Enter the length of the audiobook in minutes (must be int): ");
+		length = Integer.parseInt(input.nextLine());
+
+		System.out.print("Would you like to enter an author (y/n): ");
+		String YN = input.nextLine();
+		while(YN.equals("Y")) {
+			System.out.print("Enter the name of the author: ");
+			String author = input.nextLine();
+			
+			authors.add(author);
+			
+			System.out.print("Would you like to enter an actor (y/n): ");
+			YN = input.nextLine();
+		}
+		
+		Audiobook audiobook = new Audiobook(id, year, title, genre, chapters, length, authors);
+		audiobookList.add(audiobook);
+		entityList.add(audiobook);
+	}
+	
+	public static void addRecord(Scanner input) {
+		String select = "";
+		System.out.println("A: Music");
+		System.out.println("B: Movie");
+		System.out.println("C: Audiobook");
+		System.out.println("D: Back to Menu");
+		System.out.print("Select a type to add to record: ");
+
+		select = input.nextLine();
+		
+		switch(select) {
+		case "A":
+			addMusic(input);
+			break;
+		case "B":
+			addMovie(input);
+			break;
+		case "C":
+			addAudiobook(input);
+			break;
+		default:
+			System.out.print("Invalid selection, please select again.");
+			select = "";
+			addRecord(input);
+			break;
+		}
+	}
+	public static void main(String args[]) {
+		TOTALID = 0;
+		Scanner input = new Scanner(System.in);
+		
+		System.out.println("A: Add Record into Database");
+		System.out.println("Q: Quit");
+		System.out.print("How to you wish to proceed?: ");
+		String choice = input.nextLine();
+		while(!(choice.equals("Q"))) {
+			switch(choice) {
+			case "A":
+				addRecord(input);
+				break;
+			default:
+				break;
+			}
+			System.out.println("A: Add Record into Database");
+			System.out.println("Q: Quit");
+			System.out.print("How to you wish to proceed?: ");
+			choice = input.nextLine();
+		}
+	}
+}
+

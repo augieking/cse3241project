@@ -1,0 +1,8 @@
+
+public class Music implements Entity{
+	
+	
+	public void edit() {
+		
+	}
+}

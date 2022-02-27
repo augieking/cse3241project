@@ -1,0 +1,11 @@
+import java.util.ArrayList;
+
+public class Audiobook {
+	public int id;
+	public int year;
+	public String title;
+	public String genre;
+	public int chapters;
+	
+	
+}
