@@ -334,22 +334,122 @@ public class Menu {
 		case "C":
 			addAudiobook(input);
 			break;
+		case "D":
+			return;
 		default:
-			System.out.print("Invalid selection, please select again.");
+			System.out.println("Invalid selection, please select again.");
 			select = "";
 			addRecord(input);
 			break;
 		}
 	}
+	
+	public static int checkEntity(String name, int type) {
+		boolean exists = false;
+		int ret = -1;
+		switch(type) {
+		case 1:
+			for(int i = 0; !exists && i < musicList.size(); i++) {
+				Music curr = musicList.get(i);
+				if(curr.songName.equals(name)) {
+					exists = true;
+					ret = i;
+				}
+			}
+			break;
+		case 2:
+			for(int i = 0; !exists && i < movieList.size(); i++) {
+				Movie curr = movieList.get(i);
+				if(curr.title.equals(name)) {
+					exists = true;
+					ret = i;
+				}
+			}
+			break;
+		case 3:
+			for(int i = 0; !exists && i < audiobookList.size(); i++) {
+				Audiobook curr = audiobookList.get(i);
+				if(curr.title.equals(name)) {
+					exists = true;
+					ret = i;
+				}
+			}
+			break;
+		default:
+			break;
+		}
+		return ret;
+	}
+	
+	public static void searchRecord(Scanner input) {
+		String search = "", select = "";
+		System.out.println("A: Music"); 
+		System.out.println("B: Movie"); 
+		System.out.println("C: Audiobook"); 
+		System.out.println("D: Back to Menu");
+		System.out.print("Select a type of record to search: ");
+		
+		select = input.nextLine();
+		
+		int check;
+		switch(select) {
+		case "A":
+			System.out.print("Type the name of the song you wish to see: ");
+			search = input.nextLine();
+			check = checkEntity(search, 1);
+			if(check != -1) {
+				Music music = musicList.get(check);
+				music.toString();
+			}
+			else
+				System.out.println("\"" + search + "\" does not exist in the records.");
+			break;
+		case "B":
+			System.out.print("Type the name of the movie you wish to see: ");
+			search = input.nextLine();
+			check = checkEntity(search, 2);
+			if(check != -1) {
+				Movie movie = movieList.get(check);
+				movie.toString();
+			}
+			break;
+		case "C":
+			System.out.print("Type the name of the audiobook you wish to see: ");
+			search = input.nextLine();
+			check = checkEntity(search, 3);
+			if(check != -1) {
+				Audiobook audiobook = audiobookList.get(check);
+				audiobook.toString();
+			}
+			break;
+		case "D":
+			return;
+		default:
+			System.out.println("Invalid selection, please select again.");
+			select = "";
+			searchRecord(input);
+			break;
+		}
+		
+		System.out.print("Do you wish to search again? (y/n): ");
+		select = input.nextLine();
+		if(select.equals("Y") || select.equals("y"))
+			searchRecord(input);
+		else
+			return;
+	}
+	
 	public static void main(String args[]) {
 		TOTALID = 0;
 		Scanner input = new Scanner(System.in);
 		
 		System.out.println("A: Add Record into Database");
-		System.out.println("B: Update Record into Database");
+		System.out.println("B: Update Record in Database");
+		System.out.println("S: Search a Record in the Database");
 		System.out.println("Q: Quit");
 		System.out.print("How to you wish to proceed?: ");
 		String choice = input.nextLine();
+		
 		while(!(choice.equals("Q"))) {
 			switch(choice) {
 			case "A":
@@ -359,14 +459,18 @@ public class Menu {
 				System.out.println("1. Music"); 
 				System.out.println("2. Movie"); 
 				System.out.println("3. Audiobook"); 
-				System.out.print("Enter a value: ");
+				System.out.print("Select a type of record to update: ");
 				int subChoice = Integer.parseInt(input.nextLine());
 				manageUpdate(subChoice, input);
 				break;
+			case "S":
+				searchRecord(input);
 			default:
 				break;
 			}
 			System.out.println("A: Add Record into Database");
+			System.out.println("B: Update Record in Database");
+			System.out.println("S: Search a Record in the Database");
 			System.out.println("Q: Quit");
 			System.out.print("How to you wish to proceed?: ");
 			choice = input.nextLine();
