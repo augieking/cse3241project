@@ -8,34 +8,18 @@ public class Menu {
     public static ArrayList<Movie> movieList = new ArrayList<>();
     public static ArrayList<Audiobook> audiobookList = new ArrayList<>();
 
-    public static void printEntityList(String listName) {
+    public static void printEntityList(ArrayList listName) {
 
-        switch (listName) {
-            case "audiobookList":
-                for (int i = 0; i < audiobookList.size(); i++) {
-                    System.out.print(i + 1 + ". ");
-                    System.out.println(audiobookList.get(i));
-                }
-                break;
-            case "musicList":
-                for (int i = 0; i < musicList.size(); i++) {
-                    System.out.print(i + 1 + ". ");
-                    System.out.println(musicList.get(i));
-                }
-                break;
-            case "movieList":
-                for (int i = 0; i < movieList.size(); i++) {
-                    System.out.print(i + 1 + ". ");
-                    System.out.println(movieList.get(i));
-                }
-                break;
-            default:
-                break;
+        for (int i = 0; i < listName.size(); i++) {
+            System.out.print(i + 1 + ". ");
+            System.out.println(listName.get(i));
         }
 
     }
 
-    public static void manageUpdate(int num, Scanner input) {
+    public static void manageUpdate(Scanner input) {
+
+        int num = selectType(input);
 
         switch (num) {
             case 1:
@@ -108,7 +92,7 @@ public class Menu {
         String songName;
         ArrayList<String> artists = new ArrayList<>();
 
-        printEntityList("musicList");
+        printEntityList(musicList);
 
         System.out.print(
                 "Enter the number corresponding to the music you want to update (must be int): ");
@@ -204,7 +188,7 @@ public class Menu {
         int length;
         ArrayList<Actor> actors = new ArrayList<>();
 
-        printEntityList("movieList");
+        printEntityList(movieList);
 
         System.out.print(
                 "Enter the number corresponding to the movie you want to update (must be int): ");
@@ -291,7 +275,7 @@ public class Menu {
         int length;
         ArrayList<String> authors = new ArrayList<>();
 
-        printEntityList("audiobookList");
+        printEntityList(audiobookList);
 
         System.out.print(
                 "Enter the number corresponding to the movie you want to update (must be int): ");
@@ -456,12 +440,43 @@ public class Menu {
         }
     }
 
+    public static void orderItems(Scanner input) {
+        int subChoice = selectType(input);
+
+        switch (subChoice) {
+            case 1:
+                printEntityList(musicList);
+                break;
+            case 2:
+                printEntityList(movieList);
+                break;
+            case 3:
+                printEntityList(audiobookList);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    public static int selectType(Scanner input) {
+
+        System.out.println("1. Music");
+        System.out.println("2. Movie");
+        System.out.println("3. Audiobook");
+        System.out.print("Select a type of record to order: ");
+        int subChoice = Integer.parseInt(input.nextLine());
+
+        return subChoice;
+    }
+
     public static void main(String args[]) {
         Scanner input = new Scanner(System.in);
 
         System.out.println("A: Add Record into Database");
         System.out.println("B: Update Record in Database");
         System.out.println("S: Search a Record in the Database");
+        System.out.println("O: Order New Items");
         System.out.println("Q: Quit");
         System.out.print("How to you wish to proceed?: ");
         String choice = input.nextLine();
@@ -472,21 +487,21 @@ public class Menu {
                     addRecord(input);
                     break;
                 case "B":
-                    System.out.println("1. Music");
-                    System.out.println("2. Movie");
-                    System.out.println("3. Audiobook");
-                    System.out.print("Select a type of record to update: ");
-                    int subChoice = Integer.parseInt(input.nextLine());
-                    manageUpdate(subChoice, input);
+                    manageUpdate(input);
                     break;
                 case "S":
                     searchRecord(input);
+                    break;
+                case "O":
+                    orderItems(input);
+                    break;
                 default:
                     break;
             }
             System.out.println("A: Add Record into Database");
             System.out.println("B: Update Record in Database");
             System.out.println("S: Search a Record in the Database");
+            System.out.println("O: Order New Items");
             System.out.println("Q: Quit");
             System.out.print("How to you wish to proceed?: ");
             choice = input.nextLine();
