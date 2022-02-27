@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 
-public class Music implements Entity {
-    public int id;
-    public int year;
+public class Music extends Entity {
     public int length;
     public String albumName;
     public String songName;
@@ -10,8 +8,7 @@ public class Music implements Entity {
 
     public Music(int ID, int YEAR, int LENGTH, String ALBUMNAME,
             String SONGNAME, ArrayList<String> ARTISTS) {
-        this.id = ID;
-        this.year = YEAR;
+        super(ID, YEAR);
         this.length = LENGTH;
         this.albumName = ALBUMNAME;
         this.songName = SONGNAME;

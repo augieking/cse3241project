@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 
-public class Audiobook implements Entity {
-    public int id;
-    public int year;
+public class Audiobook extends Entity {
     public String title;
     public String genre;
     public int chapters;
@@ -11,8 +9,7 @@ public class Audiobook implements Entity {
 
     public Audiobook(int ID, int YEAR, String TITLE, String GENRE, int CHAPTERS,
             int LENGTH, ArrayList<String> AUTHORS) {
-        this.id = ID;
-        this.year = YEAR;
+        super(ID, YEAR);
         this.title = TITLE;
         this.genre = GENRE;
         this.chapters = CHAPTERS;

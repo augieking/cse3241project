@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 
-public class Movie implements Entity {
-    public int id;
-    public int year;
+public class Movie extends Entity {
     public String director;
     public String genre;
     public String title;
@@ -11,8 +9,7 @@ public class Movie implements Entity {
 
     public Movie(int ID, int YEAR, String DIRECTOR, String GENRE, String TITLE,
             int LENGTH, ArrayList<Actor> ACTORS) {
-        this.id = ID;
-        this.year = YEAR;
+        super(ID, YEAR);
         this.director = DIRECTOR;
         this.genre = GENRE;
         this.title = TITLE;
