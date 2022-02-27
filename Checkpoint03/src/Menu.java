@@ -1,4 +1,7 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Menu {
@@ -7,6 +10,7 @@ public class Menu {
     public static ArrayList<Music> musicList = new ArrayList<>();
     public static ArrayList<Movie> movieList = new ArrayList<>();
     public static ArrayList<Audiobook> audiobookList = new ArrayList<>();
+    public static ArrayList<Order> orders = new ArrayList<>();
 
     public static void printEntityList(ArrayList listName) {
 
@@ -396,7 +400,7 @@ public class Menu {
                 check = checkEntity(search, 1);
                 if (check != -1) {
                     Music music = musicList.get(check);
-                    music.toString();
+                    System.out.println(music.toString());
                 } else {
                     System.out.println("\"" + search
                             + "\" does not exist in the records.");
@@ -409,7 +413,7 @@ public class Menu {
                 check = checkEntity(search, 2);
                 if (check != -1) {
                     Movie movie = movieList.get(check);
-                    movie.toString();
+                    System.out.println(movie.toString());
                 }
                 break;
             case "C":
@@ -419,7 +423,7 @@ public class Menu {
                 check = checkEntity(search, 3);
                 if (check != -1) {
                     Audiobook audiobook = audiobookList.get(check);
-                    audiobook.toString();
+                    System.out.println(audiobook.toString());
                 }
                 break;
             case "D":
@@ -442,20 +446,61 @@ public class Menu {
 
     public static void orderItems(Scanner input) {
         int subChoice = selectType(input);
+        int index = 0;
+        
+        int numDigCopies;
+        int numPhysCopies;
+        double price;
+        LocalDate arrivalDate;
+        Entity media = null;
 
         switch (subChoice) {
             case 1:
                 printEntityList(musicList);
+                System.out.print(
+                        "Enter the number corresponding to the music you want to update (must be int): ");
+                index = Integer.parseInt(input.nextLine()) - 1;
+                media = musicList.get(index);
                 break;
             case 2:
                 printEntityList(movieList);
+                System.out.print(
+                        "Enter the number corresponding to the movie you want to update (must be int): ");
+                index = Integer.parseInt(input.nextLine()) - 1;
+                media = movieList.get(index);
                 break;
             case 3:
                 printEntityList(audiobookList);
+                System.out.print(
+                        "Enter the number corresponding to the audiobook you want to update (must be int): ");
+                index = Integer.parseInt(input.nextLine()) - 1;
+                media = audiobookList.get(index);
                 break;
             default:
                 break;
         }
+        
+        System.out.print(
+                "Enter the number of digital copies ordered (must be int): ");
+        numDigCopies = Integer.parseInt(input.nextLine());
+        System.out.print("Enter the number of physical copies ordered (must be int): ");
+        numPhysCopies = Integer.parseInt(input.nextLine());
+        System.out.print("Enter price (must be double): ");
+        price = Double.parseDouble(input.nextLine());
+        System.out.print(
+                "Enter the arrival date (January 2, 2010): ");
+        String dateString = input.nextLine();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH);
+        arrivalDate = LocalDate.parse(dateString, formatter);
+        
+        Order order = new Order(numDigCopies, numPhysCopies, price,
+            arrivalDate, media);
+        
+        orders.add(order); 
+        
+        System.out.println(order);
+        
+        
 
     }
 
