@@ -1,11 +1,14 @@
+import java.util.HashMap;
 
 public class Actor {
 	public String name;
-	public String roleInMovie;
+	public HashMap<Movie, String> movieRelation = new HashMap<Movie, String>();
 	
-	public Actor(String NAME, String ROLEINMOVIE) {
+	public Actor(String NAME) {
 		name = NAME;
-		roleInMovie = ROLEINMOVIE;
 	}
 	
+	public void addMovieRelation(Movie movie, String role) {
+		movieRelation.put(movie, role);
+	}
 }

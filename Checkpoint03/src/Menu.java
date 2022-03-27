@@ -171,7 +171,7 @@ public class Menu {
             System.out.print("Enter the role of the actor: ");
             String role = input.nextLine();
 
-            Actor actor = new Actor(actorName, role);
+            Actor actor = new Actor(actorName);
             actors.add(actor);
 
             System.out.print("Would you like to enter an actor (y/n): ");
@@ -220,7 +220,7 @@ public class Menu {
             System.out.print("Enter the role of the actor: ");
             String role = input.nextLine();
 
-            Actor actor = new Actor(actorName, role);
+            Actor actor = new Actor(actorName);
             actors.add(actor);
 
             System.out.print("Would you like to enter an actor (y/n): ");
