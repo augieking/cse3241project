@@ -9,7 +9,7 @@ public class Audiobook extends Entity {
 
     public Audiobook(int YEAR, String TITLE, String GENRE, int CHAPTERS,
             int LENGTH, ArrayList<String> AUTHORS) {
-        super(YEAR);
+        super(YEAR, "Audiobook");
         this.title = TITLE;
         this.genre = GENRE;
         this.chapters = CHAPTERS;

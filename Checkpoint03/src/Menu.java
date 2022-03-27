@@ -447,7 +447,7 @@ public class Menu {
     public static void orderItems(Scanner input) {
         int subChoice = selectType(input);
         int index = 0;
-        
+
         int numDigCopies;
         int numPhysCopies;
         double price;
@@ -479,28 +479,27 @@ public class Menu {
             default:
                 break;
         }
-        
+
         System.out.print(
                 "Enter the number of digital copies ordered (must be int): ");
         numDigCopies = Integer.parseInt(input.nextLine());
-        System.out.print("Enter the number of physical copies ordered (must be int): ");
+        System.out.print(
+                "Enter the number of physical copies ordered (must be int): ");
         numPhysCopies = Integer.parseInt(input.nextLine());
         System.out.print("Enter price (must be double): ");
         price = Double.parseDouble(input.nextLine());
-        System.out.print(
-                "Enter the arrival date (January 2, 2010): ");
+        System.out.print("Enter the arrival date (January 2, 2010): ");
         String dateString = input.nextLine();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH);
+        DateTimeFormatter formatter = DateTimeFormatter
+                .ofPattern("MMMM d, yyyy", Locale.ENGLISH);
         arrivalDate = LocalDate.parse(dateString, formatter);
-        
-        Order order = new Order(numDigCopies, numPhysCopies, price,
-            arrivalDate, media);
-        
-        orders.add(order); 
-        
+
+        Order order = new Order(media.type, numDigCopies, numPhysCopies, price,
+                arrivalDate, media);
+
+        orders.add(order);
+
         System.out.println(order);
-        
-        
 
     }
 
