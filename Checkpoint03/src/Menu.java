@@ -514,42 +514,4 @@ public class Menu {
 
         return subChoice;
     }
-
-    public static void main(String args[]) {
-        Scanner input = new Scanner(System.in);
-
-        System.out.println("A: Add Record into Database");
-        System.out.println("B: Update Record in Database");
-        System.out.println("S: Search a Record in the Database");
-        System.out.println("O: Order New Items");
-        System.out.println("Q: Quit");
-        System.out.print("How to you wish to proceed?: ");
-        String choice = input.nextLine();
-
-        while (!(choice.equals("Q"))) {
-            switch (choice) {
-                case "A":
-                    addRecord(input);
-                    break;
-                case "B":
-                    manageUpdate(input);
-                    break;
-                case "S":
-                    searchRecord(input);
-                    break;
-                case "O":
-                    orderItems(input);
-                    break;
-                default:
-                    break;
-            }
-            System.out.println("A: Add Record into Database");
-            System.out.println("B: Update Record in Database");
-            System.out.println("S: Search a Record in the Database");
-            System.out.println("O: Order New Items");
-            System.out.println("Q: Quit");
-            System.out.print("How to you wish to proceed?: ");
-            choice = input.nextLine();
-        }
-    }
 }
