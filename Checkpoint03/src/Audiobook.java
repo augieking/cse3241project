@@ -1,6 +1,9 @@
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Audiobook extends Entity {
+	public int year;
+	public UUID id;
     public String title;
     public String genre;
     public int chapters;
@@ -15,6 +18,8 @@ public class Audiobook extends Entity {
         this.chapters = CHAPTERS;
         this.length = LENGTH;
         this.authors = AUTHORS;
+        id = UUID.randomUUID();
+        year = YEAR;
     }
 
     public void update(int YEAR, String TITLE, String GENRE, int CHAPTERS,
@@ -30,8 +35,6 @@ public class Audiobook extends Entity {
 
     @Override
     public String toString() {
-        return "ID: " + this.id + "year: " + this.year + "title: " + this.title
-                + "genre: " + this.genre + "chapters: " + this.chapters
-                + "length: " + this.length;
+        return id + ", " + title + ", " + genre + ", " + chapters + ", " + year + ", " + length;
     }
 }

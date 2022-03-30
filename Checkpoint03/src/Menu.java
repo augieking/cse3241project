@@ -273,6 +273,7 @@ public class Menu {
                 length, authors);
         audiobookList.add(audiobook);
         entityList.add(audiobook);
+        Database.databaseCall("INSERT INTO AUDIOBOOK VALUES (" + audiobook.toString() + ")");
     }
 
     public static void editAudiobook(Scanner input) {
