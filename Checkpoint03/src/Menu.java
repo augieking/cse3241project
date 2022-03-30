@@ -251,7 +251,7 @@ public class Menu {
         System.out.print("Enter the genre of the audiobook: ");
         genre = input.nextLine();
         System.out.print(
-                "Enter the year the audiobook was released (must be int): ");
+                "Enter the number of chapters (must be int): ");
         chapters = Integer.parseInt(input.nextLine());
         System.out.print(
                 "Enter the length of the audiobook in minutes (must be int): ");
@@ -265,7 +265,7 @@ public class Menu {
 
             authors.add(author);
 
-            System.out.print("Would you like to enter an actor (y/n): ");
+            System.out.print("Would you like to enter an author (y/n): ");
             YN = input.nextLine();
         }
 
