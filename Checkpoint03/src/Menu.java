@@ -184,6 +184,8 @@ public class Menu {
         Movie movie = new Movie(year, director, genre, title, length, actors);
         movieList.add(movie);
         entityList.add(movie);
+        Database.databaseCall("INSERT INTO Movie VALUES (" + movie.toString() + ")");
+
     }
 
     public static void editMovie(Scanner input) {

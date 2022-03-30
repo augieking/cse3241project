@@ -1,6 +1,9 @@
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Movie extends Entity {
+	public int year;
+	public UUID id;
     public String director;
     public String genre;
     public String title;
@@ -15,6 +18,8 @@ public class Movie extends Entity {
         this.title = TITLE;
         this.length = LENGTH;
         this.actors = ACTORS;
+        id = UUID.randomUUID();
+        year = YEAR;
     }
 
     public void update(int YEAR, String DIRECTOR, String GENRE, String TITLE, int LENGTH,
@@ -30,8 +35,6 @@ public class Movie extends Entity {
 
     @Override
     public String toString() {
-        return "ID: " + this.id + "year: " + this.year + "director: "
-                + this.director + "genre: " + this.genre + "title: "
-                + this.title;
+        return id + ", " + title + ", " + year + ", " + director + ", " + genre;
     }
 }

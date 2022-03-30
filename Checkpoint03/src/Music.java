@@ -20,6 +20,7 @@ public class Music extends Entity {
         this.artists = ARTISTS;
         year = YEAR;
         genreName = GENRENAME;
+        id = UUID.randomUUID();
     }
 
     public void update(int YEAR, int LENGTH, String ALBUMNAME, String SONGNAME,
