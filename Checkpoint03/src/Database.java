@@ -1,46 +1,82 @@
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
 public class Database {
-	static final String JDBC_DRIVER = "";
-	static final String DB_URL = "";
-	static final String USER = "";
-	static final String PASS = "";
-	
+
+    //REQUIREMENTS FOR CONNECTING TO DATABASE
+    private static String DATABASE = "Checkpoint4.db";
+    private static Connection c;
+
+    /**
+     * Connects to the database if it exists, creates it if it does not, and
+     * returns the connection object.
+     *
+     * @param databaseFileName
+     *            the database file name
+     * @return a connection object to the designated database
+     */
+    public static Connection initializeDB() {
+        String url = "jdbc:sqlite:" + DATABASE;
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url);
+            if (conn != null) {
+                DatabaseMetaData meta = conn.getMetaData();
+                System.out
+                        .println("The driver name is " + meta.getDriverName());
+                System.out.println(
+                        "The connection to the database was successful.");
+            } else {
+                System.out.println("Null Connection");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out
+                    .println("There was a problem connecting to the database.");
+        }
+        return conn;
+    }
+
+    public static void databaseCall(Connection conn, String sql) {
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int columnCount = rsmd.getColumnCount();
+            for (int i = 1; i <= columnCount; i++) {
+                String value = rsmd.getColumnName(i);
+                System.out.print(value);
+                if (i < columnCount) {
+                    System.out.print(",  ");
+                }
+            }
+            System.out.print("\n");
+            while (rs.next()) {
+                for (int i = 1; i <= columnCount; i++) {
+                    String columnValue = rs.getString(i);
+                    System.out.print(columnValue);
+                    if (i < columnCount) {
+                        System.out.print(",  ");
+                    }
+                }
+                System.out.print("\n");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public static void main(String args[]) {
-    	Connection conn = null;
-    	PreparedStatement stmt = null;
-    	ResultSet rSet = null;
-    	try 
-    	{
-    		Class.forName(JDBC_DRIVER);
-    		
-    		System.out.println("Connecting to database...");
-    		conn = DriverManager.getConnection(DB_URL, USER, PASS);
-    		String sql = "";
-    		stmt = conn.prepareStatement(sql);
-    		stmt.setInt(1, 1235550987);
-    		
-    		rSet = stmt.executeQuery();
-    		while(rSet.next()) {
-    			// EXAMPLE
-    			String first = rSet.getString("first");
-    			String last = rSet.getString("last");
-    			System.out.println("Name: " + last + ", " + first);
-    		}
-    	}
-    	catch(Exception e) 
-    	{
-    		//handle errors here...
-    	}
-    	finally 
-    	{
-    		//if(rSet != null) {rSet.close();}
-    		//if(stmt != null) {stmt.close();}
-    		//if(conn != null) {conn.close();}  		
-    	}
-    	
-    	
+        System.out.println("Establishing connection...");
+        Connection connection = initializeDB();
+        c = connection;
+
         Scanner input = new Scanner(System.in);
 
         System.out.println("A: Add Record into Database");
