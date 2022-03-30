@@ -494,8 +494,8 @@ public class Menu {
                 .ofPattern("MMMM d, yyyy", Locale.ENGLISH);
         arrivalDate = LocalDate.parse(dateString, formatter);
 
-        Order order = new Order(numDigCopies, numPhysCopies, price, arrivalDate,
-                media);
+        Order order = new Order(media.type, numDigCopies, numPhysCopies, price,
+                arrivalDate, media);
 
         orders.add(order);
 
