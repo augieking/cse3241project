@@ -1,18 +1,25 @@
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.util.UUID;
 
 public class Music extends Entity {
+	public UUID id;
+    public String songName;
     public int length;
     public String albumName;
-    public String songName;
+    public String genreName;
+    public int year;
     public ArrayList<String> artists;
 
-    public Music(int YEAR, int LENGTH, String ALBUMNAME, String SONGNAME,
+    public Music(int YEAR, int LENGTH, String ALBUMNAME, String SONGNAME, String GENRENAME,
             ArrayList<String> ARTISTS) {
         super(YEAR, "Music");
         this.length = LENGTH;
         this.albumName = ALBUMNAME;
         this.songName = SONGNAME;
         this.artists = ARTISTS;
+        year = YEAR;
+        genreName = GENRENAME;
     }
 
     public void update(int YEAR, int LENGTH, String ALBUMNAME, String SONGNAME,
@@ -26,7 +33,6 @@ public class Music extends Entity {
 
     @Override
     public String toString() {
-        return "ID: " + this.id + "year: " + this.year + "album: "
-                + this.albumName + "song: " + this.songName;
+        return id + ", " + songName + ", " + length + ", " + albumName + ", " + genreName + ", " + year;
     }
 }

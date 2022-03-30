@@ -46,6 +46,7 @@ public class Menu {
         int length;
         String albumName;
         String songName;
+        String genreName;
         ArrayList<String> artists = new ArrayList<>();
 
         System.out
@@ -58,6 +59,8 @@ public class Menu {
         albumName = input.nextLine();
         System.out.print("Enter the name of the song: ");
         songName = input.nextLine();
+        System.out.print("Enter the genre of the song: ");
+        genreName = input.nextLine();
 
         System.out
                 .print("Would you like to enter the name of an artist (y/n): ");
@@ -72,7 +75,7 @@ public class Menu {
             YN = input.nextLine();
         }
 
-        Music music = new Music(year, length, albumName, songName, artists);
+        Music music = new Music(year, length, albumName, songName, genreName, artists);
         musicList.add(music);
         entityList.add(music);
 
@@ -86,7 +89,7 @@ public class Menu {
             System.out.println("arist: " + music.artists.get(i));
         }
         //TEST
-
+        Database.databaseCall("INSERT INTO Music VALUES (" + music.toString() + ")");
     }
 
     public static void editMusic(Scanner input) {

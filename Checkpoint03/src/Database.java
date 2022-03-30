@@ -43,7 +43,8 @@ public class Database {
         return conn;
     }
 
-    public static void databaseCall(Connection conn, String sql) {
+    public static void databaseCall(String sql) {
+    	Connection conn = c;
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
