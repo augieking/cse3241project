@@ -89,7 +89,7 @@ public class Menu {
             System.out.println("arist: " + music.artists.get(i));
         }
         //TEST
-        Database.databaseCall("INSERT INTO Music VALUES (" + music.toString() + ")");
+        Database.databaseCall("INSERT INTO MUSIC VALUES (" + music.toString() + ")");
     }
 
     public static void editMusic(Scanner input) {
@@ -184,7 +184,7 @@ public class Menu {
         Movie movie = new Movie(year, director, genre, title, length, actors);
         movieList.add(movie);
         entityList.add(movie);
-        Database.databaseCall("INSERT INTO Movie VALUES (" + movie.toString() + ")");
+        Database.databaseCall("INSERT INTO MOVIE VALUES (" + movie.toString() + ")");
 
     }
 
