@@ -96,7 +96,7 @@ public class Menu {
         int year;
         int length;
         String albumName;
-        String songName = "";
+        String songName;
         ArrayList<String> artists = new ArrayList<>();
         String columnName = "", toChange = "";
         int toChangeInt;
@@ -134,6 +134,10 @@ public class Menu {
         }
 		*/
         //music.update(year, length, albumName, songName, artists);
+        
+        System.out.print("What's the name of the song that you would like to update?: ");
+        songName = input.nextLine();
+        // CHECK DATABASE FOR SONG USING SELECT
         
         Database.databaseCall("UPDATE MUSIC SET " + columnName + "=\'" + toChange + "\' WHERE name = " + songName);
 
