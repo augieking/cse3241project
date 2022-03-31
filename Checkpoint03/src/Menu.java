@@ -93,13 +93,7 @@ public class Menu {
     }
 
     public static void editMusic(Scanner input) {
-        int year;
-        int length;
-        String albumName;
-        String songName;
-        ArrayList<String> artists = new ArrayList<>();
-        String columnName = "", toChange = "";
-        int toChangeInt;
+        String songName, columnName, toChange;
 
         /*
         printEntityList(musicList);
@@ -139,8 +133,32 @@ public class Menu {
         songName = input.nextLine();
         // CHECK DATABASE FOR SONG USING SELECT
         
-        Database.databaseCall("UPDATE MUSIC SET " + columnName + "=\'" + toChange + "\' WHERE name = " + songName);
-
+        
+        //ASSUME PAST HERE THAT THE SONG EXISTS
+        System.out.print("What column would you like to change?\nA: YEAR\nB: LENGTH\nC: ALBUM NAME\nD: GENRE");
+        String selection = input.nextLine();
+        if(selection.equals("A"))
+        	columnName = "year";
+        else if(selection.equals("B"))
+        	columnName = "length";
+        else if(selection.equals("C"))
+        	columnName = "album";
+        else if(selection.equals("D"))
+        	columnName = "genre";
+        else {
+        	System.out.println("Invalid selection.");
+        	return;
+        }
+        
+        System.out.print("What would you like to change " + columnName + " to? (if year or length then input must be int): ");
+        toChange = input.nextLine();
+        
+        if(selection.equals("A") || selection.equals("B")) {
+        	Database.databaseCall("UPDATE MUSIC SET " + columnName + "=\'" + Integer.parseInt(toChange) + "\' WHERE name = " + songName);	
+        }
+        else {
+            Database.databaseCall("UPDATE MUSIC SET " + columnName + "=\'" + toChange + "\' WHERE name = " + songName);	
+        }
     }
 
     public static void addMovie(Scanner input) {
@@ -187,8 +205,38 @@ public class Menu {
     }
 
     public static void editMovie(Scanner input) {
+        String movieName, columnName, toChange;
+        
+        System.out.print("What's the name of the movie that you would like to update?: ");
+        movieName = input.nextLine();
+        // CHECK DATABASE FOR MOVIE USING SELECT
+        
+        
+        //ASSUME PAST HERE THAT THE MOVIE EXISTS
+        System.out.print("What column would you like to change?\nA: YEAR\nB: DIRECTOR\nC: GENRE");
+        String selection = input.nextLine();
+        if(selection.equals("A"))
+        	columnName = "year";
+        else if(selection.equals("B"))
+        	columnName = "director";
+        else if(selection.equals("C"))
+        	columnName = "genre";
+        else {
+        	System.out.println("Invalid selection.");
+        	return;
+        }
+        
+        System.out.print("What would you like to change " + columnName + " to? (if year then input must be int): ");
+        toChange = input.nextLine();
+        
+        if(selection.equals("A")) {
+        	Database.databaseCall("UPDATE MOVIE SET " + columnName + "=\'" + Integer.parseInt(toChange) + "\' WHERE name = " + movieName);	
+        }
+        else {
+            Database.databaseCall("UPDATE MOVIE SET " + columnName + "=\'" + toChange + "\' WHERE name = " + movieName);	
+        }
 
-        int year;
+        /*int year;
         String director;
         String genre;
         String title;
@@ -230,7 +278,8 @@ public class Menu {
             YN = input.nextLine();
         }
 
-        movie.update(year, director, genre, title, length, actors);
+        movie.update(year, director, genre, title, length, actors);*/
+    	
     }
 
     public static void addAudiobook(Scanner input) {
@@ -275,8 +324,40 @@ public class Menu {
     }
 
     public static void editAudiobook(Scanner input) {
+        String audiobookName, columnName, toChange;
 
-        int year;
+        System.out.print("What's the name of the audiobook that you would like to update?: ");
+        audiobookName = input.nextLine();
+        // CHECK DATABASE FOR AUDIOBOOK USING SELECT
+        
+        
+        //ASSUME PAST HERE THAT THE AUDIOBOOK EXISTS
+        System.out.print("What column would you like to change?\nA: YEAR\nB: LENGTH\nC: CHAPTERS\nD: GENRE");
+        String selection = input.nextLine();
+        if(selection.equals("A"))
+        	columnName = "year";
+        else if(selection.equals("B"))
+        	columnName = "length";
+        else if(selection.equals("C"))
+        	columnName = "chapters";
+        else if(selection.equals("D"))
+        	columnName = "genre";
+        else {
+        	System.out.println("Invalid selection.");
+        	return;
+        }
+        
+        System.out.print("What would you like to change " + columnName + " to? (if year, length, or chapters then input must be int): ");
+        toChange = input.nextLine();
+        
+        if(selection.equals("A") || selection.equals("B") || selection.equals("C")) {
+        	Database.databaseCall("UPDATE MOVIE SET " + columnName + "=\'" + Integer.parseInt(toChange) + "\' WHERE name = " + audiobookName);	
+        }
+        else {
+            Database.databaseCall("UPDATE MOVIE SET " + columnName + "=\'" + toChange + "\' WHERE name = " + audiobookName);	
+        }
+        
+        /*int year;
         String title;
         String genre;
         int chapters;
@@ -316,7 +397,7 @@ public class Menu {
             YN = input.nextLine();
         }
 
-        audiobook.update(year, title, genre, chapters, length, authors);
+        audiobook.update(year, title, genre, chapters, length, authors);*/
     }
 
     public static void addRecord(Scanner input) {
