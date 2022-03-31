@@ -96,9 +96,12 @@ public class Menu {
         int year;
         int length;
         String albumName;
-        String songName;
+        String songName = "";
         ArrayList<String> artists = new ArrayList<>();
+        String columnName = "", toChange = "";
+        int toChangeInt;
 
+        /*
         printEntityList(musicList);
 
         System.out.print(
@@ -129,19 +132,10 @@ public class Menu {
             System.out.print("Would you like to enter another artist (y/n): ");
             YN = input.nextLine();
         }
-
-        music.update(year, length, albumName, songName, artists);
-
-        //TEST
-        System.out.println("id: " + music.id);
-        System.out.println("year: " + music.year);
-        System.out.println("length: " + music.length);
-        System.out.println("albumName: " + music.albumName);
-        System.out.println("songName: " + music.songName);
-        for (int i = 0; i < artists.size(); i++) {
-            System.out.println("arist: " + music.artists.get(i));
-        }
-        //TEST
+		*/
+        //music.update(year, length, albumName, songName, artists);
+        
+        Database.databaseCall("UPDATE MUSIC SET " + columnName + "=\'" + toChange + "\' WHERE name = " + songName);
 
     }
 
