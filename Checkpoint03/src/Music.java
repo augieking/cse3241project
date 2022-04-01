@@ -1,9 +1,8 @@
 import java.util.ArrayList;
-import java.time.LocalDate;
 import java.util.UUID;
 
 public class Music extends Entity {
-	public UUID id;
+    public UUID id;
     public String songName;
     public int length;
     public String albumName;
@@ -11,16 +10,16 @@ public class Music extends Entity {
     public int year;
     public ArrayList<String> artists;
 
-    public Music(int YEAR, int LENGTH, String ALBUMNAME, String SONGNAME, String GENRENAME,
-            ArrayList<String> ARTISTS) {
+    public Music(int YEAR, int LENGTH, String ALBUMNAME, String SONGNAME,
+            String GENRENAME, ArrayList<String> ARTISTS) {
         super(YEAR, "Music");
         this.length = LENGTH;
         this.albumName = ALBUMNAME;
         this.songName = SONGNAME;
         this.artists = ARTISTS;
-        year = YEAR;
-        genreName = GENRENAME;
-        id = UUID.randomUUID();
+        this.year = YEAR;
+        this.genreName = GENRENAME;
+        this.id = UUID.randomUUID();
     }
 
     public void update(int YEAR, int LENGTH, String ALBUMNAME, String SONGNAME,
@@ -34,6 +33,8 @@ public class Music extends Entity {
 
     @Override
     public String toString() {
-        return id + ", " + songName + ", " + length + ", " + albumName + ", " + genreName + ", " + year;
+        return "'" + this.id.toString() + "'" + ", " + "'" + this.songName + "'"
+                + ", " + this.length + ", " + "'" + this.albumName + "'" + ", "
+                + "'" + this.genreName + "'" + ", " + this.year;
     }
 }
