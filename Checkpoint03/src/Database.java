@@ -100,7 +100,7 @@ public class Database {
                     Menu.searchRecord(input);
                     break;
                 case "O":
-                    Menu.orderItems(input);
+                    //Menu.orderItems(input);
                     break;
                 default:
                     break;
