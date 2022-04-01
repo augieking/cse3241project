@@ -414,18 +414,18 @@ public class Menu {
             case "A":
                 System.out.print("Type the name of the song you wish to see: ");
                 search = input.nextLine();
-                // SELECT STATEMENT
+                Database.databaseCall("SELECT * FROM MUSIC WHERE name = \'" + search + "\';");
                 break;
             case "B":
                 System.out
                         .print("Type the name of the movie you wish to see: ");
-                // SELECT STATEMENT
+                Database.databaseCall("SELECT * FROM MOVIE WHERE name = \'" + search + "\';");
                 break;
             case "C":
                 System.out.print(
                         "Type the name of the audiobook you wish to see: ");
                 search = input.nextLine();
-                // SELECT STATEMENT
+                Database.databaseCall("SELECT * FROM AUDIOBOOK WHERE name = \'" + search + "\';");
                 break;
             case "D":
                 return;
