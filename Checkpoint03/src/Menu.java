@@ -49,7 +49,7 @@ public class Menu {
         String genreName;
         ArrayList<String> artists = new ArrayList<>();
 
-        System.out.println("Test");
+        System.out.println("Test edit 2");
 
         System.out
                 .print("Enter the year the song was released (must be int): ");
