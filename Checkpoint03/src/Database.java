@@ -85,6 +85,7 @@ public class Database {
         System.out.println("D: Delete Record in Database");
         System.out.println("S: Search a Record in the Database");
         System.out.println("O: Order New Items");
+        System.out.println("U: Useful Reports");
         System.out.println("Q: Quit");
         System.out.print("How to you wish to proceed?: ");
         String choice = input.nextLine();
@@ -106,6 +107,9 @@ public class Database {
                 case "O":
                     //Menu.orderItems(input);
                     break;
+                case "U":
+                	//Menu.usefulReports(input);
+                	break;
                 default:
                     break;
             }
