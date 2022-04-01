@@ -10,4 +10,10 @@ public class Review {
         this.reviewId = UUID.randomUUID();
         this.rating = RATING;
     }
+
+    @Override
+    public String toString() {
+        return "'" + this.reviewId.toString() + "'" + "," + this.rating;
+    }
+
 }

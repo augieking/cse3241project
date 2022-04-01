@@ -10,4 +10,11 @@ public class Entity {
         this.year = year;
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "'" + this.id.toString() + "'" + "," + this.year + "," + "'"
+                + this.type + "'";
+    }
+
 }
