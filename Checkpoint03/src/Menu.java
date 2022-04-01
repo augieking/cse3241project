@@ -49,6 +49,8 @@ public class Menu {
         String genreName;
         ArrayList<String> artists = new ArrayList<>();
 
+        System.out.println("Test");
+
         System.out
                 .print("Enter the year the song was released (must be int): ");
         year = Integer.parseInt(input.nextLine());
@@ -75,7 +77,8 @@ public class Menu {
             YN = input.nextLine();
         }
 
-        Music music = new Music(year, length, albumName, songName, genreName, artists);
+        Music music = new Music(year, length, albumName, songName, genreName,
+                artists);
         musicList.add(music);
         entityList.add(music);
 
@@ -89,75 +92,77 @@ public class Menu {
             System.out.println("arist: " + music.artists.get(i));
         }
         //TEST
-        Database.databaseCall("INSERT INTO MUSIC VALUES (" + music.toString() + ")");
+        Database.databaseCall(
+                "INSERT INTO MUSIC VALUES (" + music.toString() + ")");
     }
 
     public static void editMusic(Scanner input) {
         String songName, columnName, toChange;
 
         /*
-        printEntityList(musicList);
-
-        System.out.print(
-                "Enter the number corresponding to the music you want to update (must be int): ");
-        int index = Integer.parseInt(input.nextLine()) - 1;
-        Music music = musicList.get(index);
-
-        System.out
-                .print("Enter the year the song was released (must be int): ");
-        year = Integer.parseInt(input.nextLine());
-        System.out.print(
-                "Enter the length of the song (in seconds, must be int): ");
-        length = Integer.parseInt(input.nextLine());
-        System.out.print("Enter the name of the album that the song is on: ");
-        albumName = input.nextLine();
-        System.out.print("Enter the name of the song: ");
-        songName = input.nextLine();
-
-        System.out
-                .print("Would you like to enter the name of an artist (y/n): ");
-        String YN = input.nextLine();
-        while (YN.equals("Y") || YN.equals("y")) {
-            System.out.print("Enter the name of the artist: ");
-            String artistName = input.nextLine();
-
-            artists.add(artistName);
-
-            System.out.print("Would you like to enter another artist (y/n): ");
-            YN = input.nextLine();
-        }
-		*/
+         * printEntityList(musicList);
+         * 
+         * System.out.print(
+         * "Enter the number corresponding to the music you want to update (must be int): "
+         * ); int index = Integer.parseInt(input.nextLine()) - 1; Music music =
+         * musicList.get(index);
+         * 
+         * System.out
+         * .print("Enter the year the song was released (must be int): "); year
+         * = Integer.parseInt(input.nextLine()); System.out.print(
+         * "Enter the length of the song (in seconds, must be int): "); length =
+         * Integer.parseInt(input.nextLine());
+         * System.out.print("Enter the name of the album that the song is on: "
+         * ); albumName = input.nextLine();
+         * System.out.print("Enter the name of the song: "); songName =
+         * input.nextLine();
+         * 
+         * System.out
+         * .print("Would you like to enter the name of an artist (y/n): ");
+         * String YN = input.nextLine(); while (YN.equals("Y") ||
+         * YN.equals("y")) { System.out.print("Enter the name of the artist: ");
+         * String artistName = input.nextLine();
+         * 
+         * artists.add(artistName);
+         * 
+         * System.out.print("Would you like to enter another artist (y/n): ");
+         * YN = input.nextLine(); }
+         */
         //music.update(year, length, albumName, songName, artists);
-        
-        System.out.print("What's the name of the song that you would like to update?: ");
+
+        System.out.print(
+                "What's the name of the song that you would like to update?: ");
         songName = input.nextLine();
         // CHECK DATABASE FOR SONG USING SELECT
-        
-        
+
         //ASSUME PAST HERE THAT THE SONG EXISTS
-        System.out.print("What column would you like to change?\nA: YEAR\nB: LENGTH\nC: ALBUM NAME\nD: GENRE");
+        System.out.print(
+                "What column would you like to change?\nA: YEAR\nB: LENGTH\nC: ALBUM NAME\nD: GENRE");
         String selection = input.nextLine();
-        if(selection.equals("A"))
-        	columnName = "year";
-        else if(selection.equals("B"))
-        	columnName = "length";
-        else if(selection.equals("C"))
-        	columnName = "album";
-        else if(selection.equals("D"))
-        	columnName = "genre";
-        else {
-        	System.out.println("Invalid selection.");
-        	return;
+        if (selection.equals("A")) {
+            columnName = "year";
+        } else if (selection.equals("B")) {
+            columnName = "length";
+        } else if (selection.equals("C")) {
+            columnName = "album";
+        } else if (selection.equals("D")) {
+            columnName = "genre";
+        } else {
+            System.out.println("Invalid selection.");
+            return;
         }
-        
-        System.out.print("What would you like to change " + columnName + " to? (if year or length then input must be int): ");
+
+        System.out.print("What would you like to change " + columnName
+                + " to? (if year or length then input must be int): ");
         toChange = input.nextLine();
-        
-        if(selection.equals("A") || selection.equals("B")) {
-        	Database.databaseCall("UPDATE MUSIC SET " + columnName + "=\'" + Integer.parseInt(toChange) + "\' WHERE name = " + songName);	
-        }
-        else {
-            Database.databaseCall("UPDATE MUSIC SET " + columnName + "=\'" + toChange + "\' WHERE name = " + songName);	
+
+        if (selection.equals("A") || selection.equals("B")) {
+            Database.databaseCall("UPDATE MUSIC SET " + columnName + "=\'"
+                    + Integer.parseInt(toChange) + "\' WHERE name = "
+                    + songName);
+        } else {
+            Database.databaseCall("UPDATE MUSIC SET " + columnName + "=\'"
+                    + toChange + "\' WHERE name = " + songName);
         }
     }
 
@@ -200,86 +205,83 @@ public class Menu {
         Movie movie = new Movie(year, director, genre, title, length, actors);
         movieList.add(movie);
         entityList.add(movie);
-        Database.databaseCall("INSERT INTO MOVIE VALUES (" + movie.toString() + ")");
+        Database.databaseCall(
+                "INSERT INTO MOVIE VALUES (" + movie.toString() + ")");
 
     }
 
     public static void editMovie(Scanner input) {
         String movieName, columnName, toChange;
-        
-        System.out.print("What's the name of the movie that you would like to update?: ");
+
+        System.out.print(
+                "What's the name of the movie that you would like to update?: ");
         movieName = input.nextLine();
         // CHECK DATABASE FOR MOVIE USING SELECT
-        
-        
+
         //ASSUME PAST HERE THAT THE MOVIE EXISTS
-        System.out.print("What column would you like to change?\nA: YEAR\nB: DIRECTOR\nC: GENRE");
+        System.out.print(
+                "What column would you like to change?\nA: YEAR\nB: DIRECTOR\nC: GENRE");
         String selection = input.nextLine();
-        if(selection.equals("A"))
-        	columnName = "year";
-        else if(selection.equals("B"))
-        	columnName = "director";
-        else if(selection.equals("C"))
-        	columnName = "genre";
-        else {
-        	System.out.println("Invalid selection.");
-        	return;
+        if (selection.equals("A")) {
+            columnName = "year";
+        } else if (selection.equals("B")) {
+            columnName = "director";
+        } else if (selection.equals("C")) {
+            columnName = "genre";
+        } else {
+            System.out.println("Invalid selection.");
+            return;
         }
-        
-        System.out.print("What would you like to change " + columnName + " to? (if year then input must be int): ");
+
+        System.out.print("What would you like to change " + columnName
+                + " to? (if year then input must be int): ");
         toChange = input.nextLine();
-        
-        if(selection.equals("A")) {
-        	Database.databaseCall("UPDATE MOVIE SET " + columnName + "=\'" + Integer.parseInt(toChange) + "\' WHERE name = " + movieName);	
-        }
-        else {
-            Database.databaseCall("UPDATE MOVIE SET " + columnName + "=\'" + toChange + "\' WHERE name = " + movieName);	
-        }
 
-        /*int year;
-        String director;
-        String genre;
-        String title;
-        int length;
-        ArrayList<Actor> actors = new ArrayList<>();
-
-        printEntityList(movieList);
-
-        System.out.print(
-                "Enter the number corresponding to the movie you want to update (must be int): ");
-        int index = Integer.parseInt(input.nextLine()) - 1;
-        Movie movie = movieList.get(index);
-
-        System.out
-                .print("Enter the year the movie was released (must be int): ");
-        year = Integer.parseInt(input.nextLine());
-        System.out.print("Enter the director of the movie: ");
-        director = input.nextLine();
-        System.out.print("Enter the genre of the movie: ");
-        genre = input.nextLine();
-        System.out.print("Enter the title of the movie: ");
-        title = input.nextLine();
-        System.out.print(
-                "Enter the length of the movie (in minutes, must be int): ");
-        length = Integer.parseInt(input.nextLine());
-
-        System.out.print("Would you like to enter an actor (y/n): ");
-        String YN = input.nextLine();
-        while (YN.equals("Y")) {
-            System.out.print("Enter the name of the actor: ");
-            String actorName = input.nextLine();
-            System.out.print("Enter the role of the actor: ");
-            String role = input.nextLine();
-
-            Actor actor = new Actor(actorName);
-            actors.add(actor);
-
-            System.out.print("Would you like to enter an actor (y/n): ");
-            YN = input.nextLine();
+        if (selection.equals("A")) {
+            Database.databaseCall("UPDATE MOVIE SET " + columnName + "=\'"
+                    + Integer.parseInt(toChange) + "\' WHERE name = "
+                    + movieName);
+        } else {
+            Database.databaseCall("UPDATE MOVIE SET " + columnName + "=\'"
+                    + toChange + "\' WHERE name = " + movieName);
         }
 
-        movie.update(year, director, genre, title, length, actors);*/
-    	
+        /*
+         * int year; String director; String genre; String title; int length;
+         * ArrayList<Actor> actors = new ArrayList<>();
+         * 
+         * printEntityList(movieList);
+         * 
+         * System.out.print(
+         * "Enter the number corresponding to the movie you want to update (must be int): "
+         * ); int index = Integer.parseInt(input.nextLine()) - 1; Movie movie =
+         * movieList.get(index);
+         * 
+         * System.out
+         * .print("Enter the year the movie was released (must be int): "); year
+         * = Integer.parseInt(input.nextLine());
+         * System.out.print("Enter the director of the movie: "); director =
+         * input.nextLine(); System.out.print("Enter the genre of the movie: ");
+         * genre = input.nextLine();
+         * System.out.print("Enter the title of the movie: "); title =
+         * input.nextLine(); System.out.print(
+         * "Enter the length of the movie (in minutes, must be int): "); length
+         * = Integer.parseInt(input.nextLine());
+         * 
+         * System.out.print("Would you like to enter an actor (y/n): "); String
+         * YN = input.nextLine(); while (YN.equals("Y")) {
+         * System.out.print("Enter the name of the actor: "); String actorName =
+         * input.nextLine(); System.out.print("Enter the role of the actor: ");
+         * String role = input.nextLine();
+         * 
+         * Actor actor = new Actor(actorName); actors.add(actor);
+         * 
+         * System.out.print("Would you like to enter an actor (y/n): "); YN =
+         * input.nextLine(); }
+         * 
+         * movie.update(year, director, genre, title, length, actors);
+         */
+
     }
 
     public static void addAudiobook(Scanner input) {
@@ -297,8 +299,7 @@ public class Menu {
         title = input.nextLine();
         System.out.print("Enter the genre of the audiobook: ");
         genre = input.nextLine();
-        System.out.print(
-                "Enter the number of chapters (must be int): ");
+        System.out.print("Enter the number of chapters (must be int): ");
         chapters = Integer.parseInt(input.nextLine());
         System.out.print(
                 "Enter the length of the audiobook in minutes (must be int): ");
@@ -320,84 +321,84 @@ public class Menu {
                 length, authors);
         audiobookList.add(audiobook);
         entityList.add(audiobook);
-        Database.databaseCall("INSERT INTO AUDIOBOOK VALUES (" + audiobook.toString() + ")");
+        Database.databaseCall(
+                "INSERT INTO AUDIOBOOK VALUES (" + audiobook.toString() + ")");
     }
 
     public static void editAudiobook(Scanner input) {
         String audiobookName, columnName, toChange;
 
-        System.out.print("What's the name of the audiobook that you would like to update?: ");
+        System.out.print(
+                "What's the name of the audiobook that you would like to update?: ");
         audiobookName = input.nextLine();
         // CHECK DATABASE FOR AUDIOBOOK USING SELECT
-        
-        
+
         //ASSUME PAST HERE THAT THE AUDIOBOOK EXISTS
-        System.out.print("What column would you like to change?\nA: YEAR\nB: LENGTH\nC: CHAPTERS\nD: GENRE");
+        System.out.print(
+                "What column would you like to change?\nA: YEAR\nB: LENGTH\nC: CHAPTERS\nD: GENRE");
         String selection = input.nextLine();
-        if(selection.equals("A"))
-        	columnName = "year";
-        else if(selection.equals("B"))
-        	columnName = "length";
-        else if(selection.equals("C"))
-        	columnName = "chapters";
-        else if(selection.equals("D"))
-        	columnName = "genre";
-        else {
-        	System.out.println("Invalid selection.");
-        	return;
+        if (selection.equals("A")) {
+            columnName = "year";
+        } else if (selection.equals("B")) {
+            columnName = "length";
+        } else if (selection.equals("C")) {
+            columnName = "chapters";
+        } else if (selection.equals("D")) {
+            columnName = "genre";
+        } else {
+            System.out.println("Invalid selection.");
+            return;
         }
-        
-        System.out.print("What would you like to change " + columnName + " to? (if year, length, or chapters then input must be int): ");
+
+        System.out.print("What would you like to change " + columnName
+                + " to? (if year, length, or chapters then input must be int): ");
         toChange = input.nextLine();
-        
-        if(selection.equals("A") || selection.equals("B") || selection.equals("C")) {
-        	Database.databaseCall("UPDATE MOVIE SET " + columnName + "=\'" + Integer.parseInt(toChange) + "\' WHERE name = " + audiobookName);	
-        }
-        else {
-            Database.databaseCall("UPDATE MOVIE SET " + columnName + "=\'" + toChange + "\' WHERE name = " + audiobookName);	
-        }
-        
-        /*int year;
-        String title;
-        String genre;
-        int chapters;
-        int length;
-        ArrayList<String> authors = new ArrayList<>();
 
-        printEntityList(audiobookList);
-
-        System.out.print(
-                "Enter the number corresponding to the movie you want to update (must be int): ");
-        int index = Integer.parseInt(input.nextLine()) - 1;
-        Audiobook audiobook = audiobookList.get(index);
-
-        System.out.print(
-                "Enter the year the audiobook was released (must be int): ");
-        year = Integer.parseInt(input.nextLine());
-        System.out.print("Enter the title of the audiobook: ");
-        title = input.nextLine();
-        System.out.print("Enter the genre of the audiobook: ");
-        genre = input.nextLine();
-        System.out.print(
-                "Enter the year the audiobook was released (must be int): ");
-        chapters = Integer.parseInt(input.nextLine());
-        System.out.print(
-                "Enter the length of the audiobook in minutes (must be int): ");
-        length = Integer.parseInt(input.nextLine());
-
-        System.out.print("Would you like to enter an author (y/n): ");
-        String YN = input.nextLine();
-        while (YN.equals("Y")) {
-            System.out.print("Enter the name of the author: ");
-            String author = input.nextLine();
-
-            authors.add(author);
-
-            System.out.print("Would you like to enter an actor (y/n): ");
-            YN = input.nextLine();
+        if (selection.equals("A") || selection.equals("B")
+                || selection.equals("C")) {
+            Database.databaseCall("UPDATE MOVIE SET " + columnName + "=\'"
+                    + Integer.parseInt(toChange) + "\' WHERE name = "
+                    + audiobookName);
+        } else {
+            Database.databaseCall("UPDATE MOVIE SET " + columnName + "=\'"
+                    + toChange + "\' WHERE name = " + audiobookName);
         }
 
-        audiobook.update(year, title, genre, chapters, length, authors);*/
+        /*
+         * int year; String title; String genre; int chapters; int length;
+         * ArrayList<String> authors = new ArrayList<>();
+         * 
+         * printEntityList(audiobookList);
+         * 
+         * System.out.print(
+         * "Enter the number corresponding to the movie you want to update (must be int): "
+         * ); int index = Integer.parseInt(input.nextLine()) - 1; Audiobook
+         * audiobook = audiobookList.get(index);
+         * 
+         * System.out.print(
+         * "Enter the year the audiobook was released (must be int): "); year =
+         * Integer.parseInt(input.nextLine());
+         * System.out.print("Enter the title of the audiobook: "); title =
+         * input.nextLine();
+         * System.out.print("Enter the genre of the audiobook: "); genre =
+         * input.nextLine(); System.out.print(
+         * "Enter the year the audiobook was released (must be int): ");
+         * chapters = Integer.parseInt(input.nextLine()); System.out.print(
+         * "Enter the length of the audiobook in minutes (must be int): ");
+         * length = Integer.parseInt(input.nextLine());
+         * 
+         * System.out.print("Would you like to enter an author (y/n): "); String
+         * YN = input.nextLine(); while (YN.equals("Y")) {
+         * System.out.print("Enter the name of the author: "); String author =
+         * input.nextLine();
+         * 
+         * authors.add(author);
+         * 
+         * System.out.print("Would you like to enter an actor (y/n): "); YN =
+         * input.nextLine(); }
+         * 
+         * audiobook.update(year, title, genre, chapters, length, authors);
+         */
     }
 
     public static void addRecord(Scanner input) {
