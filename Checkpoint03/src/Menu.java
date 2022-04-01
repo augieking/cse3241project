@@ -75,7 +75,7 @@ public class Menu {
 
         Database.databaseCall(
                 "INSERT INTO MUSIC VALUES (" + music.toString() + ")");
-        //ADD TO MEDIA LIST
+
     }
 
     public static void editMusic(Scanner input) {
@@ -113,6 +113,16 @@ public class Menu {
             Database.databaseCall("UPDATE MUSIC SET " + columnName + "=\'"
                     + toChange + "\' WHERE name = \'" + songName + "\'");
         }
+    }
+    
+    public static void deleteMusic(Scanner input) {
+        String musicName;
+
+        System.out.print(
+                "What's the name of the song that you would like to delete?: ");
+        musicName = input.nextLine();
+
+        Database.databaseCall("DELETE FROM MUSIC WHERE name = \'" + musicName + "\';");
     }
 
     public static void addMovie(Scanner input) {
@@ -191,6 +201,17 @@ public class Menu {
                     + toChange + "\' WHERE name = \'" + movieName + "\';");
         }
     }
+    
+    public static void deleteMovie(Scanner input) {
+        String movieName;
+
+        System.out.print(
+                "What's the name of the movie that you would like to delete?: ");
+        movieName = input.nextLine();
+
+        Database.databaseCall("DELETE FROM MOVIE WHERE name = \'" + movieName + "\';");
+    }
+
 
     public static void addAudiobook(Scanner input) {
         int year;
@@ -260,13 +281,23 @@ public class Menu {
 
         if (selection.equals("A") || selection.equals("B")
                 || selection.equals("C")) {
-            Database.databaseCall("UPDATE MOVIE SET " + columnName + "=\'"
+            Database.databaseCall("UPDATE AUDIOBOOK SET " + columnName + "=\'"
                     + Integer.parseInt(toChange) + "\' WHERE name = \'"
                     + audiobookName + "\'");
         } else {
-            Database.databaseCall("UPDATE MOVIE SET " + columnName + "=\'"
+            Database.databaseCall("UPDATE AUDIOBOOK SET " + columnName + "=\'"
                     + toChange + "\' WHERE name = \'" + audiobookName + "\'");
         }
+    }
+    
+    public static void deleteAudiobook(Scanner input) {
+        String audiobookName;
+
+        System.out.print(
+                "What's the name of the audiobook that you would like to delete?: ");
+        audiobookName = input.nextLine();
+
+        Database.databaseCall("DELETE FROM AUDIOBOOK WHERE name = \'" + audiobookName + "\';");
     }
 
     public static void addRecord(Scanner input) {
@@ -288,6 +319,36 @@ public class Menu {
                 break;
             case "C":
                 addAudiobook(input);
+                break;
+            case "D":
+                return;
+            default:
+                System.out.println("Invalid selection, please select again.");
+                select = "";
+                addRecord(input);
+                break;
+        }
+    }
+    
+    public static void deleteRecord(Scanner input) {
+        String select = "";
+        System.out.println("A: Music");
+        System.out.println("B: Movie");
+        System.out.println("C: Audiobook");
+        System.out.println("D: Back to Menu");
+        System.out.print("Select a type to delete from record: ");
+
+        select = input.nextLine();
+
+        switch (select) {
+            case "A":
+                deleteMusic(input);
+                break;
+            case "B":
+                deleteMovie(input);
+                break;
+            case "C":
+                deleteAudiobook(input);
                 break;
             case "D":
                 return;

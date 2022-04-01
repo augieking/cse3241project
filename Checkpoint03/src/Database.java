@@ -82,6 +82,7 @@ public class Database {
 
         System.out.println("A: Add Record into Database");
         System.out.println("B: Update Record in Database");
+        System.out.println("D: Delete Record in Database");
         System.out.println("S: Search a Record in the Database");
         System.out.println("O: Order New Items");
         System.out.println("Q: Quit");
@@ -96,6 +97,9 @@ public class Database {
                 case "B":
                     Menu.manageUpdate(input);
                     break;
+                case "D":
+                	Menu.deleteRecord(input);
+                	break;
                 case "S":
                     Menu.searchRecord(input);
                     break;
@@ -107,6 +111,7 @@ public class Database {
             }
             System.out.println("A: Add Record into Database");
             System.out.println("B: Update Record in Database");
+            System.out.println("D: Delete Record in Database");
             System.out.println("S: Search a Record in the Database");
             System.out.println("O: Order New Items");
             System.out.println("Q: Quit");
