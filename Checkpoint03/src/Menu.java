@@ -63,7 +63,8 @@ public class Menu {
         while (YN.equals("Y") || YN.equals("y")) {
             System.out.print("Enter the name of the artist: ");
             String artistName = input.nextLine();
-
+            
+            
             artists.add(artistName);
 
             System.out.print("Would you like to enter another artist (y/n): ");
@@ -74,7 +75,17 @@ public class Menu {
                 artists);
 
         Database.databaseCall(
-                "INSERT INTO MUSIC VALUES (" + music.toString() + ")");
+                "INSERT INTO MUSIC VALUES (" + music.toString() + ");");
+        Database.databaseCall(
+                "INSERT INTO MEDIA VALUES (\'" + music.id.toString() + "\', \'" + String.valueOf(music.year) + "\', \'Music\');");
+        for(int i = 0; i < music.artists.size(); i++) {
+        	String artistName = music.artists.get(i);
+            Database.databaseCall(
+                    "INSERT INTO SONGWRITER VALUES (\'" + music.id.toString() + "\', \'" + artistName  + "\');");
+            Database.databaseCall(
+                    "INSERT INTO ARTIST VALUES (\'" + artistName  + "\');");
+        }
+        
 
     }
 
@@ -164,7 +175,15 @@ public class Menu {
         Movie movie = new Movie(year, director, genre, title, length, actors);
         Database.databaseCall(
                 "INSERT INTO MOVIE VALUES (" + movie.toString() + ")");
-        //ADD TO MEDIA LIST
+        Database.databaseCall(
+                "INSERT INTO MEDIA VALUES (\'" + movie.id.toString() + "\', \'" + String.valueOf(movie.year) + "\', \'Music\');");
+        for(int i = 0; i < movie.actors.size(); i++) {
+        	String actorName = movie.actors.get(i).name;
+            Database.databaseCall(
+                    "INSERT INTO FILM_RELATION VALUES (\'" + movie.id.toString() + "\', \'" + actorName  + "\');");
+            Database.databaseCall(
+                    "INSERT INTO ACTOR VALUES (\'" + actorName  + "\');");
+        }
     }
 
     public static void editMovie(Scanner input) {
@@ -250,7 +269,15 @@ public class Menu {
                 length, authors);
         Database.databaseCall(
                 "INSERT INTO AUDIOBOOK VALUES (" + audiobook.toString() + ")");
-        //ADD TO MEDIA LIST
+        Database.databaseCall(
+                "INSERT INTO MEDIA VALUES (\'" + audiobook.id.toString() + "\', \'" + String.valueOf(audiobook.year) + "\', \'Music\');");
+        for(int i = 0; i < audiobook.authors.size(); i++) {
+        	String authorName = audiobook.authors.get(i);
+            Database.databaseCall(
+                    "INSERT INTO BOOK_AUTHOR VALUES (\'" + audiobook.id.toString() + "\', \'" + authorName  + "\');");
+            Database.databaseCall(
+                    "INSERT INTO AUTHOR VALUES (\'" + authorName  + "\');");
+        }
     }
 
     public static void editAudiobook(Scanner input) {
