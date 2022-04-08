@@ -11,7 +11,7 @@ public class Database {
 
     //REQUIREMENTS FOR CONNECTING TO DATABASE
     private static String DATABASE = "Checkpoint4.db";
-    private static Connection c;
+    public static Connection c;
 
     /**
      * Connects to the database if it exists, creates it if it does not, and
@@ -43,6 +43,7 @@ public class Database {
         return conn;
     }
 
+    //THIS WILL BE DELETED ONCE ALL EMBEDDED SQL IS CLEAN
     public static void databaseCall(String sql) {
     	Connection conn = c;
         try {
@@ -84,6 +85,7 @@ public class Database {
         System.out.println("B: Update Record in Database");
         System.out.println("D: Delete Record in Database");
         System.out.println("S: Search a Record in the Database");
+        System.out.println("T: Search a person in the Database");
         System.out.println("O: Order New Items");
         System.out.println("U: Useful Reports");
         System.out.println("Q: Quit");
@@ -104,6 +106,9 @@ public class Database {
                 case "S":
                     Menu.searchRecord(input);
                     break;
+                case "T":
+                	Menu.searchPerson(input);
+                	break;
                 case "O":
                     //Menu.orderItems(input);
                     break;

@@ -1,7 +1,17 @@
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Scanner;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
 public class Menu {
@@ -36,6 +46,65 @@ public class Menu {
 
     }
 
+    public static void addMusicDatabase(Music music, ArrayList<String> artists) {
+    	Connection conn = Database.c;
+    	PreparedStatement stmt1 = null;
+    	try {
+            String sql = "INSERT INTO MUSIC VALUES (?, ?, ?, ?, ?, ?)";
+            stmt1 = conn.prepareStatement(sql);
+            stmt1.setString(1, music.id.toString());
+            stmt1.setString(2, music.songName);
+            stmt1.setInt(3, music.length);
+            stmt1.setString(4, music.albumName);
+            stmt1.setString(5,  music.genreName);
+            stmt1.setInt(6,  music.year);
+            stmt1.executeUpdate();
+            stmt1.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    	PreparedStatement stmt2 = null;
+    	try {
+            String sql = "INSERT INTO MEDIA VALUES (?, ?, ?)";
+            stmt2 = conn.prepareStatement(sql);
+            stmt2.setString(1, music.id.toString());
+            stmt2.setString(2, String.valueOf(music.year));
+            stmt2.setString(3, "Music");
+            stmt2.executeUpdate();
+            stmt2.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    	for(int i = 0; i < artists.size(); i++) {
+    		String artistName = artists.get(i);
+    		PreparedStatement stmt3 = null;
+        	try {
+                String sql = "INSERT INTO SONGWRITER VALUES (?, ?)";
+                stmt3 = conn.prepareStatement(sql);
+                stmt3.setString(1, music.id.toString());
+                stmt3.setString(2, artistName);
+                stmt3.executeUpdate();
+                stmt3.close();
+                
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        	PreparedStatement stmt4 = null;
+        	try {
+                String sql = "INSERT INTO ARTIST VALUES (?)";
+                stmt4 = conn.prepareStatement(sql);
+                stmt4.setString(1, artistName);
+                stmt4.executeUpdate();
+                stmt4.close();
+                
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+    	}
+    }
+    
     public static void addMusic(Scanner input) {
         int year;
         int length;
@@ -74,19 +143,7 @@ public class Menu {
         Music music = new Music(year, length, albumName, songName, genreName,
                 artists);
 
-        Database.databaseCall(
-                "INSERT INTO MUSIC VALUES (" + music.toString() + ");");
-        Database.databaseCall(
-                "INSERT INTO MEDIA VALUES (\'" + music.id.toString() + "\', \'" + String.valueOf(music.year) + "\', \'Music\');");
-        for(int i = 0; i < music.artists.size(); i++) {
-        	String artistName = music.artists.get(i);
-            Database.databaseCall(
-                    "INSERT INTO SONGWRITER VALUES (\'" + music.id.toString() + "\', \'" + artistName  + "\');");
-            Database.databaseCall(
-                    "INSERT INTO ARTIST VALUES (\'" + artistName  + "\');");
-        }
-        
-
+        addMusicDatabase(music, artists);
     }
 
     public static void editMusic(Scanner input) {
@@ -471,6 +528,8 @@ public class Menu {
             return;
         }
     }
+    
+    public static void searchPerson(Scanner input) {}
 
     /*
     public static void orderItems(Scanner input) {
