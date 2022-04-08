@@ -341,7 +341,62 @@ public class Menu {
     }
 
     public static void addAudiobookDatabase(Audiobook audiobook, ArrayList<String> authors) {
-    	
+    	Connection conn = Database.c;
+    	PreparedStatement stmt1 = null;
+    	try {
+            String sql = "INSERT INTO AUDIOBOOK VALUES (?, ?, ?, ?, ?)";
+            stmt1 = conn.prepareStatement(sql);
+            stmt1.setString(1, audiobook.id.toString());
+            stmt1.setString(2, audiobook.title);
+            stmt1.setString(3, audiobook.genre);
+            stmt1.setInt(4, audiobook.chapters);
+            stmt1.setInt(5,  audiobook.year);
+            stmt1.setInt(5,  audiobook.length);
+            stmt1.executeUpdate();
+            stmt1.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    	PreparedStatement stmt2 = null;
+    	try {
+            String sql = "INSERT INTO MEDIA VALUES (?, ?, ?)";
+            stmt2 = conn.prepareStatement(sql);
+            stmt2.setString(1, audiobook.id.toString());
+            stmt2.setString(2, String.valueOf(audiobook.year));
+            stmt2.setString(3, "Audiobook");
+            stmt2.executeUpdate();
+            stmt2.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    	for(int i = 0; i < authors.size(); i++) {
+    		String authorName = audiobook.authors.get(i);
+    		PreparedStatement stmt3 = null;
+        	try {
+                String sql = "INSERT INTO BOOK_AUTHOR VALUES (?, ?)";
+                stmt3 = conn.prepareStatement(sql);
+                stmt3.setString(1, audiobook.id.toString());
+                stmt3.setString(2, authorName);
+                stmt3.executeUpdate();
+                stmt3.close();
+                
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        	PreparedStatement stmt4 = null;
+        	try {
+                String sql = "INSERT INTO AUTHOR VALUES (?)";
+                stmt4 = conn.prepareStatement(sql);
+                stmt4.setString(1, authorName);
+                stmt4.executeUpdate();
+                stmt4.close();
+                
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+    	}
     }
 
     public static void addAudiobook(Scanner input) {
@@ -367,7 +422,7 @@ public class Menu {
 
         System.out.print("Would you like to enter an author (y/n): ");
         String YN = input.nextLine();
-        while (YN.equals("Y")) {
+        while (YN.equals("Y") || YN.equals("y")) {
             System.out.print("Enter the name of the author: ");
             String author = input.nextLine();
 
@@ -379,17 +434,8 @@ public class Menu {
 
         Audiobook audiobook = new Audiobook(year, title, genre, chapters,
                 length, authors);
-        Database.databaseCall(
-                "INSERT INTO AUDIOBOOK VALUES (" + audiobook.toString() + ")");
-        Database.databaseCall(
-                "INSERT INTO MEDIA VALUES (\'" + audiobook.id.toString() + "\', \'" + String.valueOf(audiobook.year) + "\', \'Music\');");
-        for(int i = 0; i < audiobook.authors.size(); i++) {
-        	String authorName = audiobook.authors.get(i);
-            Database.databaseCall(
-                    "INSERT INTO BOOK_AUTHOR VALUES (\'" + audiobook.id.toString() + "\', \'" + authorName  + "\');");
-            Database.databaseCall(
-                    "INSERT INTO AUTHOR VALUES (\'" + authorName  + "\');");
-        }
+        
+        addAudiobookDatabase(audiobook, authors);
     }
 
     public static void editAudiobook(Scanner input) {
