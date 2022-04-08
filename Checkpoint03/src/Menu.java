@@ -193,6 +193,65 @@ public class Menu {
         Database.databaseCall("DELETE FROM MUSIC WHERE name = \'" + musicName + "\';");
     }
 
+    public static void addMovieDatabase(Movie movie, ArrayList<Actor> actors) {
+    	Connection conn = Database.c;
+    	PreparedStatement stmt1 = null;
+    	try {
+            String sql = "INSERT INTO MOVIE VALUES (?, ?, ?, ?, ?)";
+            stmt1 = conn.prepareStatement(sql);
+            stmt1.setString(1, movie.id.toString());
+            stmt1.setString(2, movie.title);
+            stmt1.setInt(3, movie.year);
+            stmt1.setString(4, movie.director);
+            stmt1.setString(5,  movie.genre);
+            stmt1.executeUpdate();
+            stmt1.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    	PreparedStatement stmt2 = null;
+    	try {
+            String sql = "INSERT INTO MEDIA VALUES (?, ?, ?)";
+            stmt2 = conn.prepareStatement(sql);
+            stmt2.setString(1, movie.id.toString());
+            stmt2.setString(2, String.valueOf(movie.year));
+            stmt2.setString(3, "Movie");
+            stmt2.executeUpdate();
+            stmt2.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    	for(int i = 0; i < actors.size(); i++) {
+    		Actor actor = actors.get(i);
+    		PreparedStatement stmt3 = null;
+        	try {
+                String sql = "INSERT INTO FILM_RELATION VALUES (?, ?, ?)";
+                stmt3 = conn.prepareStatement(sql);
+                stmt3.setString(1, movie.id.toString());
+                stmt3.setString(2, actor.name);
+                stmt3.setString(3, actor.role);
+                stmt3.executeUpdate();
+                stmt3.close();
+                
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        	PreparedStatement stmt4 = null;
+        	try {
+                String sql = "INSERT INTO ACTOR VALUES (?)";
+                stmt4 = conn.prepareStatement(sql);
+                stmt4.setString(1, actor.name);
+                stmt4.executeUpdate();
+                stmt4.close();
+                
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+    	}
+    }
+    
     public static void addMovie(Scanner input) {
         int year;
         String director;
@@ -216,13 +275,15 @@ public class Menu {
 
         System.out.print("Would you like to enter an actor (y/n): ");
         String YN = input.nextLine();
-        while (YN.equals("Y")) {
+        while (YN.equals("Y") || YN.equals("y")) {
             System.out.print("Enter the name of the actor: ");
             String actorName = input.nextLine();
-            System.out.print("Enter the role of the actor: ");
-            String role = input.nextLine();
+            System.out.print("Enter the role of the actor (A for Lead, B for Supporting): ");
+            String role = "Supporting Actor";
+            if(input.nextLine().equals("A"))
+            	role = "Lead Actor";
 
-            Actor actor = new Actor(actorName);
+            Actor actor = new Actor(actorName, role);
             actors.add(actor);
 
             System.out.print("Would you like to enter an actor (y/n): ");
@@ -230,17 +291,8 @@ public class Menu {
         }
 
         Movie movie = new Movie(year, director, genre, title, length, actors);
-        Database.databaseCall(
-                "INSERT INTO MOVIE VALUES (" + movie.toString() + ")");
-        Database.databaseCall(
-                "INSERT INTO MEDIA VALUES (\'" + movie.id.toString() + "\', \'" + String.valueOf(movie.year) + "\', \'Music\');");
-        for(int i = 0; i < movie.actors.size(); i++) {
-        	String actorName = movie.actors.get(i).name;
-            Database.databaseCall(
-                    "INSERT INTO FILM_RELATION VALUES (\'" + movie.id.toString() + "\', \'" + actorName  + "\');");
-            Database.databaseCall(
-                    "INSERT INTO ACTOR VALUES (\'" + actorName  + "\');");
-        }
+        
+        addMovieDatabase(movie, actors);
     }
 
     public static void editMovie(Scanner input) {
@@ -288,6 +340,9 @@ public class Menu {
         Database.databaseCall("DELETE FROM MOVIE WHERE name = \'" + movieName + "\';");
     }
 
+    public static void addAudiobookDatabase(Audiobook audiobook, ArrayList<String> authors) {
+    	
+    }
 
     public static void addAudiobook(Scanner input) {
         int year;
