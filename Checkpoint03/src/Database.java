@@ -122,7 +122,9 @@ public class Database {
             System.out.println("B: Update Record in Database");
             System.out.println("D: Delete Record in Database");
             System.out.println("S: Search a Record in the Database");
+            System.out.println("T: Search a person in the Database");
             System.out.println("O: Order New Items");
+            System.out.println("U: Useful Reports");
             System.out.println("Q: Quit");
             System.out.print("How to you wish to proceed?: ");
             choice = input.nextLine();

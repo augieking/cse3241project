@@ -583,6 +583,69 @@ public class Menu {
         return ret;
     }
     */
+    
+    public static void searchRecordDatabase(String type, String input) {
+    	Connection conn = Database.c;
+    	PreparedStatement stmt1 = null;
+    	ResultSet rs = null;
+    	try {
+    		String sql = "";
+    		if(type.equals("MUSIC"))
+    			sql = "SELECT * FROM MUSIC WHERE name = ?;";
+    		else if(type.equals("MOVIE"))
+    			sql = "SELECT * FROM MOVIE WHERE name = ?;";
+    		else
+			sql = "SELECT * FROM AUDIOBOOK WHERE name = ?;";
+            stmt1 = conn.prepareStatement(sql);
+            stmt1.setString(1, input);
+            rs = stmt1.executeQuery();
+            if(type.equals("MUSIC")) {
+                while(rs.next()) {
+                	String name = rs.getString("name");
+                	int length = rs.getInt("length");
+                	String album = rs.getString("album");
+                	String genre = rs.getString("genre");
+                	int year = rs.getInt("year");
+                	System.out.println("\nNAME: " + name);
+                	System.out.println("LENGTH: " + length);
+                	System.out.println("ALBUM: " + album);
+                	System.out.println("GENRE: " + genre);
+                	System.out.println("YEAR: " + year + "\n");
+                }
+            }
+            else if(type.equals("MOVIE")) {
+                while(rs.next()) {
+                	String name = rs.getString("name");
+                	int year = rs.getInt("year");
+                	String director = rs.getString("director");
+                	String genre = rs.getString("genre");
+                	System.out.println("\nNAME: " + name);
+                	System.out.println("YEAR: " + year);
+                	System.out.println("DIRECTOR: " + director);
+                	System.out.println("GENRE: " + genre + "\n");
+                }
+            }
+            else {
+                while(rs.next()) {
+                	String name = rs.getString("name");
+                	String genre = rs.getString("genre");
+                	int chapters = rs.getInt("chapters");
+                	int year = rs.getInt("year");
+                	int length = rs.getInt("length");
+                	System.out.println("\nNAME: " + name);
+                	System.out.println("GENRE: " + genre);
+                	System.out.println("CHAPTERS: " + chapters);
+                	System.out.println("YEAR: " + year);
+                	System.out.println("LENGTH: " + length);
+                }
+            }
+            stmt1.close();
+            rs.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     public static void searchRecord(Scanner input) {
         String search = "", select = "";
@@ -599,18 +662,22 @@ public class Menu {
             case "A":
                 System.out.print("Type the name of the song you wish to see: ");
                 search = input.nextLine();
-                Database.databaseCall("SELECT * FROM MUSIC WHERE name = \'" + search + "\';");
+                searchRecordDatabase("MUSIC", search);
+                //Database.databaseCall("SELECT * FROM MUSIC WHERE name = \'" + search + "\';");
                 break;
             case "B":
                 System.out
                         .print("Type the name of the movie you wish to see: ");
-                Database.databaseCall("SELECT * FROM MOVIE WHERE name = \'" + search + "\';");
+                search = input.nextLine();
+                searchRecordDatabase("MOVIE", search);
+                //Database.databaseCall("SELECT * FROM MOVIE WHERE name = \'" + search + "\';");
                 break;
             case "C":
                 System.out.print(
                         "Type the name of the audiobook you wish to see: ");
                 search = input.nextLine();
-                Database.databaseCall("SELECT * FROM AUDIOBOOK WHERE name = \'" + search + "\';");
+                searchRecordDatabase("AUDIOBOOK", search);
+                //Database.databaseCall("SELECT * FROM AUDIOBOOK WHERE name = \'" + search + "\';");
                 break;
             case "D":
                 return;
@@ -630,7 +697,18 @@ public class Menu {
         }
     }
     
-    public static void searchPerson(Scanner input) {}
+    public static void searchPerson(Scanner input) {
+        String search = "", select = "";
+        System.out.println("A: Artist");
+        System.out.println("B: Actor");
+        System.out.println("C: Author");
+        System.out.println("D: Back to Menu");
+        System.out.print("Select a type of person to search: ");
+
+        select = input.nextLine();
+
+        
+    }
 
     /*
     public static void orderItems(Scanner input) {
