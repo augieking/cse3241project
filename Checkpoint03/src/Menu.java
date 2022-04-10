@@ -657,27 +657,23 @@ public class Menu {
 
         select = input.nextLine();
 
-        int check;
         switch (select) {
             case "A":
                 System.out.print("Type the name of the song you wish to see: ");
                 search = input.nextLine();
                 searchRecordDatabase("MUSIC", search);
-                //Database.databaseCall("SELECT * FROM MUSIC WHERE name = \'" + search + "\';");
                 break;
             case "B":
                 System.out
                         .print("Type the name of the movie you wish to see: ");
                 search = input.nextLine();
                 searchRecordDatabase("MOVIE", search);
-                //Database.databaseCall("SELECT * FROM MOVIE WHERE name = \'" + search + "\';");
                 break;
             case "C":
                 System.out.print(
                         "Type the name of the audiobook you wish to see: ");
                 search = input.nextLine();
                 searchRecordDatabase("AUDIOBOOK", search);
-                //Database.databaseCall("SELECT * FROM AUDIOBOOK WHERE name = \'" + search + "\';");
                 break;
             case "D":
                 return;
@@ -697,6 +693,63 @@ public class Menu {
         }
     }
     
+    public static void searchPersonDatabase(String type, String input) {
+    	Connection conn = Database.c;
+    	PreparedStatement stmt1 = null;
+    	ResultSet rs = null;
+    	try {
+    		String sql = "";
+    		if(type.equals("ARTIST"))
+    			sql = "SELECT * "
+    					+ "FROM SONGWRITER, MUSIC "
+    					+ "WHERE SONGWRITER.artistName = ? AND SONGWRITER.musicId = MUSIC.id;";
+    		else if(type.equals("ACTOR"))
+    			sql = "SELECT * "
+    					+ "FROM FILM_RELATION, MOVIE "
+    					+ "WHERE FILM_RELATION.actorName = ? AND FILM_RELATION.movieId = MOVIE.id;";
+
+    		else
+    			sql = "SELECT * "
+    					+ "FROM BOOK_AUTHOR, AUDIOBOOK "
+    					+ "WHERE BOOK_AUTHOR.authorName = ? AND BOOK_AUTHOR.bookId = AUDIOBOOK.id;";
+            stmt1 = conn.prepareStatement(sql);
+            stmt1.setString(1, input);
+            rs = stmt1.executeQuery();
+            
+            if(type.equals("ARTIST")) {
+                while(rs.next()) {
+                	String musicName = rs.getString("name");
+                	String artistName = rs.getString("artistName");
+                	System.out.println("\nSONG: " + musicName);
+                	System.out.println("ARTIST: " + artistName + "\n");
+                }
+            }
+            else if(type.equals("ACTOR")) {
+                while(rs.next()) {
+                	String movieName = rs.getString("name");
+                	String actorName = rs.getString("actorName");
+                	String role = rs.getString("role");
+                	System.out.println("\nMOVIE: " + movieName);
+                	System.out.println("ACTOR: " + actorName);
+                	System.out.println("ROLE: " + role + "\n");
+                }
+            }
+            else {
+                while(rs.next()) {
+                	String bookName = rs.getString("name");
+                	String authorName = rs.getString("authorName");
+                	System.out.println("\nAUDIOBOOK: " + bookName);
+                	System.out.println("AUTHOR: " + authorName + "\n");
+                }
+            }
+            stmt1.close();
+            rs.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public static void searchPerson(Scanner input) {
         String search = "", select = "";
         System.out.println("A: Artist");
@@ -707,7 +760,40 @@ public class Menu {
 
         select = input.nextLine();
 
-        
+        switch (select) {
+	        case "A":
+	            System.out.print("Type the name of the Arist you wish to see: ");
+	            search = input.nextLine();
+	            searchPersonDatabase("ARTIST", search);
+	            break;
+	        case "B":
+	            System.out
+	                    .print("Type the name of the Actor you wish to see: ");
+	            search = input.nextLine();
+	            searchPersonDatabase("ACTOR", search);
+	            break;
+	        case "C":
+	            System.out.print(
+	                    "Type the name of the Author you wish to see: ");
+	            search = input.nextLine();
+	            searchPersonDatabase("AUTHOR", search);
+	            break;
+	        case "D":
+	            return;
+	        default:
+	            System.out.println("Invalid selection, please select again.");
+	            select = "";
+	            searchRecord(input);
+	            break;
+	    }
+
+	    System.out.print("Do you wish to search again? (y/n): ");
+	    select = input.nextLine();
+	    if (select.equals("Y") || select.equals("y")) {
+	        searchRecord(input);
+	    } else {
+	        return;
+	    }
     }
 
     /*
