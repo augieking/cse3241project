@@ -390,14 +390,7 @@ public class Menu {
                 + " to? (if year then input must be int): ");
         toChange = input.nextLine();
 
-        if (selection.equals("A")) {
-            Database.databaseCall("UPDATE MOVIE SET " + columnName + "=\'"
-                    + Integer.parseInt(toChange) + "\' WHERE name = \'"
-                    + movieName + "\';");
-        } else {
-            Database.databaseCall("UPDATE MOVIE SET " + columnName + "=\'"
-                    + toChange + "\' WHERE name = \'" + movieName + "\';");
-        }
+        editMovieDatabase(selection, movieName, toChange);
     }
     
     public static void deleteMovie(Scanner input) {
@@ -575,15 +568,7 @@ public class Menu {
                 + " to? (if year, length, or chapters then input must be int): ");
         toChange = input.nextLine();
 
-        if (selection.equals("A") || selection.equals("B")
-                || selection.equals("C")) {
-            Database.databaseCall("UPDATE AUDIOBOOK SET " + columnName + "=\'"
-                    + Integer.parseInt(toChange) + "\' WHERE name = \'"
-                    + audiobookName + "\'");
-        } else {
-            Database.databaseCall("UPDATE AUDIOBOOK SET " + columnName + "=\'"
-                    + toChange + "\' WHERE name = \'" + audiobookName + "\'");
-        }
+        editAudiobookDatabase(selection, audiobookName, toChange);
     }
     
     public static void deleteAudiobook(Scanner input) {
