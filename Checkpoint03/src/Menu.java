@@ -146,6 +146,47 @@ public class Menu {
         addMusicDatabase(music, artists);
     }
 
+    public static void editMusicDatabase(String column, String song, String change) {
+    	Connection conn = Database.c;
+    	PreparedStatement stmt1 = null;
+    	try {
+            String sql = "";
+            if(column.equals("A")) {
+                sql = "UPDATE MUSIC "
+                		+ "SET YEAR = ? "
+                		+ "WHERE name = ?";
+            }
+            else if(column.equals("B")) {
+                sql = "UPDATE MUSIC "
+                		+ "SET LENGTH = ? "
+                		+ "WHERE name = ?";
+            }
+            else if(column.equals("C")) {
+                sql = "UPDATE MUSIC "
+                		+ "SET ALBUM = ? "
+                		+ "WHERE name = ?";
+            }
+            else {
+                sql = "UPDATE MUSIC "
+                		+ "SET GENRE = ? "
+                		+ "WHERE name = ?";
+            }
+            stmt1 = conn.prepareStatement(sql);
+            if(column.equals("A") || column.equals("B")) {
+                stmt1.setInt(1, Integer.parseInt(change));
+            }
+            else {
+                stmt1.setString(1, change);
+            }
+            stmt1.setString(2, song);
+            stmt1.executeUpdate();
+            stmt1.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public static void editMusic(Scanner input) {
         String songName, columnName, toChange;
 
@@ -173,14 +214,7 @@ public class Menu {
                 + " to? (if year or length then input must be int): ");
         toChange = input.nextLine();
 
-        if (selection.equals("A") || selection.equals("B")) {
-            Database.databaseCall("UPDATE MUSIC SET " + columnName + "= \'"
-                    + Integer.parseInt(toChange) + "\' WHERE name = '"
-                    + songName + "\';");
-        } else {
-            Database.databaseCall("UPDATE MUSIC SET " + columnName + "=\'"
-                    + toChange + "\' WHERE name = \'" + songName + "\'");
-        }
+        editMusicDatabase(selection, songName, toChange);
     }
     
     public static void deleteMusic(Scanner input) {
@@ -295,6 +329,42 @@ public class Menu {
         addMovieDatabase(movie, actors);
     }
 
+    public static void editMovieDatabase(String column, String movie, String change) {
+    	Connection conn = Database.c;
+    	PreparedStatement stmt1 = null;
+    	try {
+            String sql = "";
+            if(column.equals("A")) {
+                sql = "UPDATE MOVIE "
+                		+ "SET year = ? "
+                		+ "WHERE name = ?";
+            }
+            else if(column.equals("B")) {
+                sql = "UPDATE MOVIE "
+                		+ "SET director = ? "
+                		+ "WHERE name = ?";
+            }
+            else {
+                sql = "UPDATE MOVIE "
+                		+ "SET genre = ? "
+                		+ "WHERE name = ?";
+            }
+            stmt1 = conn.prepareStatement(sql);
+            if(column.equals("A")) {
+                stmt1.setInt(1, Integer.parseInt(change));
+            }
+            else {
+                stmt1.setString(1, change);
+            }
+            stmt1.setString(2, movie);
+            stmt1.executeUpdate();
+            stmt1.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public static void editMovie(Scanner input) {
         String movieName, columnName, toChange;
 
@@ -303,7 +373,7 @@ public class Menu {
         movieName = input.nextLine();
 
         System.out.print(
-                "What column would you like to change?\nA: YEAR\nB: DIRECTOR\nC: GENRE");
+                "A: YEAR\nB: DIRECTOR\nC: GENRE\nWhat column would you like to change?: ");
         String selection = input.nextLine();
         if (selection.equals("A")) {
             columnName = "year";
@@ -438,6 +508,47 @@ public class Menu {
         addAudiobookDatabase(audiobook, authors);
     }
 
+    public static void editAudiobookDatabase(String column, String audiobook, String change) {
+    	Connection conn = Database.c;
+    	PreparedStatement stmt1 = null;
+    	try {
+            String sql = "";
+            if(column.equals("A")) {
+                sql = "UPDATE AUDIOBOOK "
+                		+ "SET year = ? "
+                		+ "WHERE name = ?";
+            }
+            else if(column.equals("B")) {
+                sql = "UPDATE AUDIOBOOK "
+                		+ "SET length = ? "
+                		+ "WHERE name = ?";
+            }
+            else if(column.equals("C")){
+                sql = "UPDATE AUDIOBOOK "
+                		+ "SET chapters = ? "
+                		+ "WHERE name = ?";
+            }
+            else {
+                sql = "UPDATE AUDIOBOOK "
+                		+ "SET genre = ? "
+                		+ "WHERE name = ?";
+            }
+            stmt1 = conn.prepareStatement(sql);
+            if(column.equals("A") || column.equals("B") || column.equals("C")) {
+                stmt1.setInt(1, Integer.parseInt(change));
+            }
+            else {
+                stmt1.setString(1, change);
+            }
+            stmt1.setString(2, audiobook);
+            stmt1.executeUpdate();
+            stmt1.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public static void editAudiobook(Scanner input) {
         String audiobookName, columnName, toChange;
 
@@ -445,7 +556,7 @@ public class Menu {
                 "What's the name of the audiobook that you would like to update?: ");
         audiobookName = input.nextLine();
         System.out.print(
-                "What column would you like to change?\nA: YEAR\nB: LENGTH\nC: CHAPTERS\nD: GENRE");
+                "A: YEAR\nB: LENGTH\nC: CHAPTERS\nD: GENRE\nWhat column would you like to change?: ");
         String selection = input.nextLine();
         if (selection.equals("A")) {
             columnName = "year";
