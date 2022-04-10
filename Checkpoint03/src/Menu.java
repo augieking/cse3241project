@@ -217,6 +217,21 @@ public class Menu {
         editMusicDatabase(selection, songName, toChange);
     }
     
+    public static void deleteMusicDatabase(String name) {
+    	Connection conn = Database.c;
+    	PreparedStatement stmt1 = null;
+    	try {
+            String sql = "DELETE FROM MUSIC WHERE name = ?;";
+            stmt1 = conn.prepareStatement(sql);
+            stmt1.setString(1, name);
+            stmt1.executeUpdate();
+            stmt1.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public static void deleteMusic(Scanner input) {
         String musicName;
 
@@ -224,7 +239,7 @@ public class Menu {
                 "What's the name of the song that you would like to delete?: ");
         musicName = input.nextLine();
 
-        Database.databaseCall("DELETE FROM MUSIC WHERE name = \'" + musicName + "\';");
+        deleteMusicDatabase(musicName);
     }
 
     public static void addMovieDatabase(Movie movie, ArrayList<Actor> actors) {
@@ -393,6 +408,21 @@ public class Menu {
         editMovieDatabase(selection, movieName, toChange);
     }
     
+    public static void deleteMovieDatabase(String name) {
+    	Connection conn = Database.c;
+    	PreparedStatement stmt1 = null;
+    	try {
+            String sql = "DELETE FROM MOVIE WHERE name = ?;";
+            stmt1 = conn.prepareStatement(sql);
+            stmt1.setString(1, name);
+            stmt1.executeUpdate();
+            stmt1.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public static void deleteMovie(Scanner input) {
         String movieName;
 
@@ -400,7 +430,7 @@ public class Menu {
                 "What's the name of the movie that you would like to delete?: ");
         movieName = input.nextLine();
 
-        Database.databaseCall("DELETE FROM MOVIE WHERE name = \'" + movieName + "\';");
+        deleteMovieDatabase(movieName);
     }
 
     public static void addAudiobookDatabase(Audiobook audiobook, ArrayList<String> authors) {
@@ -571,6 +601,21 @@ public class Menu {
         editAudiobookDatabase(selection, audiobookName, toChange);
     }
     
+    public static void deleteAudiobookDatabase(String name) {
+    	Connection conn = Database.c;
+    	PreparedStatement stmt1 = null;
+    	try {
+            String sql = "DELETE FROM AUDIOBOOK WHERE name = ?;";
+            stmt1 = conn.prepareStatement(sql);
+            stmt1.setString(1, name);
+            stmt1.executeUpdate();
+            stmt1.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public static void deleteAudiobook(Scanner input) {
         String audiobookName;
 
@@ -578,7 +623,7 @@ public class Menu {
                 "What's the name of the audiobook that you would like to delete?: ");
         audiobookName = input.nextLine();
 
-        Database.databaseCall("DELETE FROM AUDIOBOOK WHERE name = \'" + audiobookName + "\';");
+        deleteAudiobookDatabase(audiobookName);
     }
 
     public static void addRecord(Scanner input) {
