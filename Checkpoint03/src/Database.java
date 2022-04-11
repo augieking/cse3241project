@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Database {
 
     //REQUIREMENTS FOR CONNECTING TO DATABASE
-    private static String DATABASE = "Checkpoint4.db";
+    private static String DATABASE = "Library.db";
     public static Connection c;
 
     /**
@@ -45,7 +45,7 @@ public class Database {
 
     //THIS WILL BE DELETED ONCE ALL EMBEDDED SQL IS CLEAN
     public static void databaseCall(String sql) {
-    	Connection conn = c;
+        Connection conn = c;
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -101,20 +101,20 @@ public class Database {
                     Menu.manageUpdate(input);
                     break;
                 case "D":
-                	Menu.deleteRecord(input);
-                	break;
+                    Menu.deleteRecord(input);
+                    break;
                 case "S":
                     Menu.searchRecord(input);
                     break;
                 case "T":
-                	Menu.searchPerson(input);
-                	break;
+                    Menu.searchPerson(input);
+                    break;
                 case "O":
                     //Menu.orderItems(input);
                     break;
                 case "U":
-                	//Menu.usefulReports(input);
-                	break;
+                    //Menu.usefulReports(input);
+                    break;
                 default:
                     break;
             }
