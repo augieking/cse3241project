@@ -136,7 +136,7 @@ public class Database {
                     Menu.addReview(input);
                     break;
                 case "U":
-                    //Menu.usefulReports(input);
+                    UsefulReports.usefulReports(input);
                     break;
                 default:
                     break;
