@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Menu {
 
-    public static void printEntityList(int subChoice) {
+    public static void printEntityList(int subChoice) {//TEST FOR COMMIT
 
         Connection conn = Database.c;
         PreparedStatement stmt1 = null;
