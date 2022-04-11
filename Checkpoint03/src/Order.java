@@ -7,28 +7,30 @@ public class Order {
     public int numPhysCopies;
     public double price;
     public LocalDate arrivalDate;
-    public Entity media;
-    public Employee employee;
+    public String mediaId;
+    public String employeeId;
+    public int activated;
 
     public Order(String type, int orderNumber, int numDigCopies,
             int numPhysCopies, double price, LocalDate arrivalDate,
-            Entity media, Employee employee) {
+            String media, String employee, int activated) {
         this.type = type;
         this.orderNumber = orderNumber;
         this.numDigCopies = numDigCopies;
         this.numPhysCopies = numPhysCopies;
         this.price = price;
         this.arrivalDate = arrivalDate;
-        this.media = media;
-        this.employee = employee;
+        this.mediaId = media;
+        this.employeeId = employee;
+        this.activated = activated;
     }
 
     @Override
     public String toString() {
-        return "'" + this.media.id.toString() + "'" + "," + "'" + this.type
-                + "'" + "," + this.orderNumber + "," + this.numDigCopies + ","
+        return "'" + this.mediaId + "'" + "," + "'" + this.type + "'" + ","
+                + this.orderNumber + "," + this.numDigCopies + ","
                 + this.numPhysCopies + "," + this.price + "," + "'"
                 + this.arrivalDate.toString() + "'" + "," + "'"
-                + this.employee.id.toString() + "'";
+                + this.employeeId + "'";
     }
 }

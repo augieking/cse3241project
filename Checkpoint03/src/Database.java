@@ -80,13 +80,18 @@ public class Database {
         c = connection;
 
         Scanner input = new Scanner(System.in);
-
         System.out.println("A: Add Record into Database");
         System.out.println("B: Update Record in Database");
         System.out.println("D: Delete Record in Database");
         System.out.println("S: Search a Record in the Database");
         System.out.println("T: Search a person in the Database");
+        System.out.println("M: Check Out Media");
+        System.out.println("N: Return Media");
         System.out.println("O: Order New Items");
+        System.out.println("I: Update Inventory");
+        System.out.println("C: Add Customer");
+        System.out.println("E: Add Employee");
+        System.out.println("R: Add Review");
         System.out.println("U: Useful Reports");
         System.out.println("Q: Quit");
         System.out.print("How to you wish to proceed?: ");
@@ -109,8 +114,26 @@ public class Database {
                 case "T":
                     Menu.searchPerson(input);
                     break;
+                case "M":
+                    Menu.checkOut(input);
+                    break;
+                case "N":
+                    Menu.returnMedia(input);
+                    break;
                 case "O":
-                    //Menu.orderItems(input);
+                    Menu.orderItems(input);
+                    break;
+                case "I":
+                    Menu.updateInventory(input);
+                    break;
+                case "C":
+                    Menu.addCustomer(input);
+                    break;
+                case "E":
+                    Menu.addEmployee(input);
+                    break;
+                case "R":
+                    Menu.addReview(input);
                     break;
                 case "U":
                     //Menu.usefulReports(input);
@@ -123,11 +146,23 @@ public class Database {
             System.out.println("D: Delete Record in Database");
             System.out.println("S: Search a Record in the Database");
             System.out.println("T: Search a person in the Database");
+            System.out.println("M: Check Out Media");
+            System.out.println("N: Return Media");
             System.out.println("O: Order New Items");
+            System.out.println("I: Update Inventory");
+            System.out.println("C: Add Customer");
+            System.out.println("E: Add Employee");
+            System.out.println("R: Add Review");
             System.out.println("U: Useful Reports");
             System.out.println("Q: Quit");
             System.out.print("How to you wish to proceed?: ");
             choice = input.nextLine();
+        }
+
+        try {
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

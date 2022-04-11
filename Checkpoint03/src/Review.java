@@ -2,12 +2,12 @@ import java.util.UUID;
 
 public class Review {
     public UUID reviewId;
-    public Entity media;
+    public String mediaId;
     public int rating;
 
-    public Review(Entity media, int RATING) {
-        this.media = media;
+    public Review(String media, int RATING) {
         this.reviewId = UUID.randomUUID();
+        this.mediaId = media;
         this.rating = RATING;
     }
 

@@ -4,8 +4,8 @@ public class Employee {
     public UUID id;
     public String name;
 
-    public Employee(UUID id, String name) {
-        this.id = id;
+    public Employee(String name) {
+        this.id = UUID.randomUUID();
         this.name = name;
     }
 

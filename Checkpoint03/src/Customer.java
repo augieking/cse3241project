@@ -5,22 +5,22 @@ public class Customer {
     public String name;
     public String address;
     public LocalDate birthDate;
-    public Employee employee;
+    public String employeeId;
 
     public Customer(String email, String name, String address,
-            LocalDate birthDate, Employee employee) {
+            LocalDate birthDate, String employee) {
         this.email = email;
         this.name = name;
         this.address = address;
         this.birthDate = birthDate;
-        this.employee = employee;
+        this.employeeId = employee;
     }
 
     @Override
     public String toString() {
-        return "'" + this.email + "'" + "," + "'" + this.name + "'" + "," + "'"
-                + this.address.toString() + "'" + "," + "'"
-                + this.employee.id.toString() + "'";
+        return "Customer [email=" + this.email + ", name=" + this.name
+                + ", address=" + this.address + ", birthDate=" + this.birthDate
+                + ", employeeId=" + this.employeeId + "]";
     }
 
 }
