@@ -38,13 +38,13 @@ public class UsefulReports {
         ResultSet results = null;
         try {
             String sql1 = "SELECT F.actorName "
-            		+ "FROM FILM_RELATION as F, MEDIA_INVENTORY_INSTANCE as MII "
-            		+ "WHERE F.movieId = MII.mediaId AND F.movieId IN( " 
-            			+ "SELECT MII.mediaId "
-            			+ "FROM MEDIA_INVENTORY_INSTANCE as MII, MOVIE as M "
-            			+ "WHERE MII.mediaId = M.id "
-            			+ "GROUP BY MII.mediaId "
-            			+ "ORDER BY MII.orderNum DESC "
+            		+ "FROM FILM_RELATION as F, MEDIA_ORDER_INSTANCE as MOI "
+            		+ "WHERE F.movieId = MOI.mediaId AND F.movieId IN( " 
+            			+ "SELECT MOI.mediaId "
+            			+ "FROM MEDIA_ORDER_INSTANCE as MOI, MOVIE as M "
+            			+ "WHERE MOI.mediaId = M.id "
+            			+ "GROUP BY MOI.mediaId "
+            			+ "ORDER BY SUM(MOI.numDigCopies + numPhysCopies) DESC "
             			+ "LIMIT 1);";
             
             stmt1 = conn.prepareStatement(sql1);
@@ -65,14 +65,15 @@ public class UsefulReports {
         ResultSet results = null;
         try {
             String sql1 = "SELECT S.artistName "
-            		+ "FROM SONGWRITER as S, MEDIA_INVENTORY_INSTANCE as MII "
-            		+ "WHERE S.musicId = MII.mediaId AND S.musicId IN( "
-            			+ "SELECT MII.mediaId "
-            			+ "FROM MEDIA_INVENTORY_INSTANCE as MII, MUSIC as M "
-            			+ "WHERE MII.mediaId = M.id "
-            			+ "GROUP BY MII.mediaId "
-            			+ "ORDER BY MII.orderNum DESC "
-            			+ "LIMIT 1);";          
+            		+ "FROM SONGWRITER as S, MEDIA_ORDER_INSTANCE as MOI "
+            		+ "WHERE S.musicId = MOI.mediaId AND S.musicId IN( "
+            			+ "SELECT MOI.mediaId "
+            			+ "FROM MEDIA_ORDER_INSTANCE as MOI, MUSIC as M "
+            			+ "WHERE MOI.mediaId = M.id "
+            			+ "GROUP BY MOI.mediaId "
+            			+ "ORDER BY SUM(MOI.numDigCopies + numPhysCopies) DESC "
+            			+ "LIMIT 1);";      
+            
             stmt1 = conn.prepareStatement(sql1);
             results = stmt1.executeQuery();
             System.out.println();
@@ -91,13 +92,13 @@ public class UsefulReports {
         ResultSet results = null;
         try {
             String sql1 = "SELECT B.authorName "
-            		+ "FROM BOOK_AUTHOR as B, MEDIA_INVENTORY_INSTANCE as MII "
-            		+ "WHERE B.bookId = MII.mediaId AND B.bookId IN( "
-            			+ "SELECT MII.mediaId "
-            			+ "FROM MEDIA_INVENTORY_INSTANCE as MII, AUDIOBOOK as A "
-            			+ "WHERE MII.mediaId = A.id "
-            			+ "GROUP BY MII.mediaId "
-            			+ "ORDER BY MII.orderNum DESC "
+            		+ "FROM BOOK_AUTHOR as B, MEDIA_ORDER_INSTANCE as MOI "
+            		+ "WHERE B.bookId = MOI.mediaId AND B.bookId IN( "
+            			+ "SELECT MOI.mediaId "
+            			+ "FROM MEDIA_ORDER_INSTANCE as MOI, AUDIOBOOK as A "
+            			+ "WHERE MOI.mediaId = A.id "
+            			+ "GROUP BY MOI.mediaId "
+            			+ "ORDER BY SUM(MOI.numDigCopies + numPhysCopies) DESC "
             			+ "LIMIT 1);";   
 
             stmt1 = conn.prepareStatement(sql1);
