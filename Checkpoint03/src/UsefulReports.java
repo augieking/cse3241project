@@ -32,7 +32,32 @@ public class UsefulReports {
         }
 	}
 	
-	public static void mostPopularActor(Scanner input) {}
+	public static void mostPopularActor(Scanner input) {
+		Connection conn = Database.c;
+        PreparedStatement stmt1 = null;
+        ResultSet results = null;
+        try {
+            String sql1 = "SELECT F.actorName "
+            		+ "FROM FILM_RELATION as F, MEDIA_INVENTORY_INSTANCE as MII "
+            		+ "WHERE F.movieId = MII.mediaId AND F.movieId IN( " 
+            			+ "SELECT MII.mediaId "
+            			+ "FROM MEDIA_INVENTORY_INSTANCE as MII, CUSTOMER_MEDIA_DUEDATE as C, MOVIE as M "
+            			+ "WHERE MII.mediaId = M.id "
+            			+ "GROUP BY MII.mediaId "
+            			+ "ORDER BY MII.orderNum DESC "
+            			+ "LIMIT 1);";
+            
+            stmt1 = conn.prepareStatement(sql1);
+            results = stmt1.executeQuery();
+            System.out.println();
+            System.out.println("MOST POPULAR ACTOR IS: " + results.getString(1));
+            System.out.println();
+            stmt1.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+	}
 	
 	public static void mostListenedToArist(Scanner input) {}
 	
