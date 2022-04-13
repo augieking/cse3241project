@@ -41,7 +41,7 @@ public class UsefulReports {
             		+ "FROM FILM_RELATION as F, MEDIA_INVENTORY_INSTANCE as MII "
             		+ "WHERE F.movieId = MII.mediaId AND F.movieId IN( " 
             			+ "SELECT MII.mediaId "
-            			+ "FROM MEDIA_INVENTORY_INSTANCE as MII, CUSTOMER_MEDIA_DUEDATE as C, MOVIE as M "
+            			+ "FROM MEDIA_INVENTORY_INSTANCE as MII, MOVIE as M "
             			+ "WHERE MII.mediaId = M.id "
             			+ "GROUP BY MII.mediaId "
             			+ "ORDER BY MII.orderNum DESC "
@@ -59,7 +59,31 @@ public class UsefulReports {
         }
 	}
 	
-	public static void mostListenedToArist(Scanner input) {}
+	public static void mostListenedToArist(Scanner input) {
+		Connection conn = Database.c;
+        PreparedStatement stmt1 = null;
+        ResultSet results = null;
+        try {
+            String sql1 = "SELECT S.artistName "
+            		+ "FROM SONGWRITER as S, MEDIA_INVENTORY_INSTANCE as MII "
+            		+ "WHERE S.musicId = MII.mediaId AND S.musicId IN( "
+            			+ "SELECT MII.mediaId "
+            			+ "FROM MEDIA_INVENTORY_INSTANCE as MII, MUSIC as M "
+            			+ "WHERE MII.mediaId = M.id "
+            			+ "GROUP BY MII.mediaId "
+            			+ "ORDER BY MII.orderNum DESC "
+            			+ "LIMIT 1);";          
+            stmt1 = conn.prepareStatement(sql1);
+            results = stmt1.executeQuery();
+            System.out.println();
+            System.out.println("MOST LISTENED TO ARTIST IS: " + results.getString(1));
+            System.out.println();
+            stmt1.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+	}
 	
 	public static void mostListenedToAuthor(Scanner input) {}
 	
