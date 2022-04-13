@@ -1263,7 +1263,7 @@ public class Menu {
         System.out.print("Do you wish to search again? (y/n): ");
         select = input.nextLine();
         if (select.equals("Y") || select.equals("y")) {
-            searchRecord(input);
+            searchPerson(input);
         } else {
             return;
         }
