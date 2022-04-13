@@ -85,7 +85,32 @@ public class UsefulReports {
         }
 	}
 	
-	public static void mostListenedToAuthor(Scanner input) {}
+	public static void mostListenedToAuthor(Scanner input) {
+		Connection conn = Database.c;
+        PreparedStatement stmt1 = null;
+        ResultSet results = null;
+        try {
+            String sql1 = "SELECT B.authorName "
+            		+ "FROM BOOK_AUTHOR as B, MEDIA_INVENTORY_INSTANCE as MII "
+            		+ "WHERE B.bookId = MII.mediaId AND B.bookId IN( "
+            			+ "SELECT MII.mediaId "
+            			+ "FROM MEDIA_INVENTORY_INSTANCE as MII, AUDIOBOOK as A "
+            			+ "WHERE MII.mediaId = A.id "
+            			+ "GROUP BY MII.mediaId "
+            			+ "ORDER BY MII.orderNum DESC "
+            			+ "LIMIT 1);";   
+
+            stmt1 = conn.prepareStatement(sql1);
+            results = stmt1.executeQuery();
+            System.out.println();
+            System.out.println("MOST LISTENED TO AUTHOR IS: " + results.getString(1));
+            System.out.println();
+            stmt1.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+	}
 	
 	public static void mostMoviesCheckedOut(Scanner input) {}
 	
