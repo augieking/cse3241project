@@ -53,7 +53,7 @@ public class UsefulReports {
             System.out.println("MOST POPULAR ACTOR IS: " + results.getString(1));
             System.out.println();
             stmt1.close();
-            
+            results.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -80,7 +80,7 @@ public class UsefulReports {
             System.out.println("MOST LISTENED TO ARTIST IS: " + results.getString(1));
             System.out.println();
             stmt1.close();
-            
+            results.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -107,13 +107,34 @@ public class UsefulReports {
             System.out.println("MOST LISTENED TO AUTHOR IS: " + results.getString(1));
             System.out.println();
             stmt1.close();
-            
+            results.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 	}
 	
-	public static void mostMoviesCheckedOut(Scanner input) {}
+	public static void mostMoviesCheckedOut(Scanner input) {
+		Connection conn = Database.c;
+        PreparedStatement stmt1 = null;
+        ResultSet results = null;
+        try {
+            String sql1 = "SELECT C.name, COUNT(CMD.instanceId) "
+            		+ "FROM MEDIA_INVENTORY_INSTANCE as MII, CUSTOMER_MEDIA_DUEDATE as CMD, CUSTOMER as C "
+            		+ "WHERE MII.type = \"Movie\" AND MII.mediaId = CMD.instanceId AND CMD.email = C.email "
+            		+ "GROUP BY CMD.email "
+            		+ "LIMIT 1;";   
+
+            stmt1 = conn.prepareStatement(sql1);
+            results = stmt1.executeQuery();
+            System.out.println();
+            System.out.println(results.getString(1) + " has ordered the most movies (" + results.getString(2) + ").");
+            System.out.println();
+            stmt1.close();
+            results.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+	}
 	
 	public static void tracksByArtistBeforeYear(Scanner input) {
 		System.out.print("Enter the name of the ARTIST: ");
