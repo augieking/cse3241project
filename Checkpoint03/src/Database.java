@@ -43,37 +43,6 @@ public class Database {
         return conn;
     }
 
-    //THIS WILL BE DELETED ONCE ALL EMBEDDED SQL IS CLEAN
-    public static void databaseCall(String sql) {
-        Connection conn = c;
-        try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int columnCount = rsmd.getColumnCount();
-            for (int i = 1; i <= columnCount; i++) {
-                String value = rsmd.getColumnName(i);
-                System.out.print(value);
-                if (i < columnCount) {
-                    System.out.print(",  ");
-                }
-            }
-            System.out.print("\n");
-            while (rs.next()) {
-                for (int i = 1; i <= columnCount; i++) {
-                    String columnValue = rs.getString(i);
-                    System.out.print(columnValue);
-                    if (i < columnCount) {
-                        System.out.print(",  ");
-                    }
-                }
-                System.out.print("\n");
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     public static void main(String args[]) {
         System.out.println("Establishing connection...");
         Connection connection = initializeDB();
