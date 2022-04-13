@@ -313,103 +313,6 @@ public class Menu {
         return orderNumber;
     }
 
-//    public static Entity getItemFromId(String id, int subChoice) {
-//        Connection conn = Database.c;
-//        PreparedStatement stmt1 = null;
-//        PreparedStatement stmt2 = null;
-//        Entity entity = null;
-//        switch (subChoice) {
-//            case 1:
-//                int year = 0;
-//                int length = 0;
-//                String albumName = "";
-//                String songName = "";
-//                String genreName = "";
-//                ArrayList<String> artists = new ArrayList<>();
-//
-//                try {
-//                    String sql = "SELECT name, year, length, genre, album FROM MUSIC WHERE id = ?";
-//                    stmt1 = conn.prepareStatement(sql);
-//                    stmt1.setString(1, id);
-//                    ResultSet results = stmt1.executeQuery();
-//                    while (results.next()) {
-//                        songName = results.getString("name");
-//                        year = results.getInt("year");
-//                        length = results.getInt("length");
-//                        genreName = results.getString("genre");
-//                        albumName = results.getString("album");
-//                    }
-//
-//                    String sql2 = "SELECT artistName FROM SONGWRITER WHERE musicId = ?";
-//                    stmt2 = conn.prepareStatement(sql2);
-//                    stmt2.setString(1, id);
-//                    ResultSet artistSet = stmt2.executeQuery();
-//                    while (artistSet.next()) {
-//                        artists.add(results.getString("artistName"));
-//                    }
-//
-//                } catch (SQLException e) {
-//                    System.out.println(e.getMessage());
-//                }
-//
-//                entity = new Music(year, length, albumName, songName, genreName,
-//                        artists);
-//
-//                break;
-//
-//            case 2:
-//                try {
-//                    String sql = "SELECT * FROM MOVIE";
-//                    stmt1 = conn.prepareStatement(sql);
-//                    ResultSet results = stmt1.executeQuery();
-//                    ResultSetMetaData meta = results.getMetaData();
-//                    int columnsNum = meta.getColumnCount();
-//                    while (results.next()) {
-//                        for (int i = 1; i <= columnsNum; i++) {
-//                            if (i > 1) {
-//                                System.out.print(", ");
-//                            }
-//                            String columnValue = results.getString(i);
-//                            System.out.print(columnValue);
-//                        }
-//                        System.out.println("");
-//                    }
-//
-//                } catch (SQLException e) {
-//                    System.out.println(e.getMessage());
-//                }
-//                break;
-//
-//            case 3:
-//                try {
-//                    String sql = "SELECT * FROM AUDIOBOOK";
-//                    stmt1 = conn.prepareStatement(sql);
-//                    ResultSet results = stmt1.executeQuery();
-//                    ResultSetMetaData meta = results.getMetaData();
-//                    int columnsNum = meta.getColumnCount();
-//                    while (results.next()) {
-//                        for (int i = 1; i <= columnsNum; i++) {
-//                            if (i > 1) {
-//                                System.out.print(", ");
-//                            }
-//                            String columnValue = results.getString(i);
-//                            System.out.print(columnValue);
-//                        }
-//                        System.out.println("");
-//                    }
-//
-//                } catch (SQLException e) {
-//                    System.out.println(e.getMessage());
-//                }
-//
-//                break;
-//
-//            default:
-//                break;
-//        }
-//        return entity;
-//    }
-
     public static void manageUpdate(Scanner input) {
 
         int num = selectType(input);
@@ -593,13 +496,46 @@ public class Menu {
     public static void deleteMusicDatabase(String name) {
         Connection conn = Database.c;
         PreparedStatement stmt1 = null;
+        ResultSet results = null;
+        String id = "";
         try {
-            String sql = "DELETE FROM MUSIC WHERE name = ?;";
+            String sql = "SELECT id FROM MUSIC WHERE name = ?;";
             stmt1 = conn.prepareStatement(sql);
             stmt1.setString(1, name);
-            stmt1.executeUpdate();
+            results = stmt1.executeQuery();
+            id = results.getString(1);
+            results.close();
             stmt1.close();
 
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            String sql = "DELETE FROM MUSIC WHERE id = ?";
+            stmt1 = conn.prepareStatement(sql);
+            stmt1.setString(1, id);
+            stmt1.executeUpdate();
+            stmt1.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        try {
+            String sql = "DELETE FROM SONGWRITER WHERE musicId = ?";
+            stmt1 = conn.prepareStatement(sql);
+            stmt1.setString(1, id);
+            stmt1.executeUpdate();
+            stmt1.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        try {
+            String sql = "DELETE FROM MEDIA WHERE id = ?";
+            stmt1 = conn.prepareStatement(sql);
+            stmt1.setString(1, id);
+            stmt1.executeUpdate();
+            stmt1.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -778,14 +714,47 @@ public class Menu {
 
     public static void deleteMovieDatabase(String name) {
         Connection conn = Database.c;
-        PreparedStatement stmt1 = null;
+        PreparedStatement stmt1 = null;  
+        ResultSet results = null;
+        String id = "";
         try {
-            String sql = "DELETE FROM MOVIE WHERE name = ?;";
+            String sql = "SELECT id FROM MOVIE WHERE name = ?;";
             stmt1 = conn.prepareStatement(sql);
             stmt1.setString(1, name);
-            stmt1.executeUpdate();
+            results = stmt1.executeQuery();
+            id = results.getString(1);
+            results.close();
             stmt1.close();
 
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            String sql = "DELETE FROM MOVIE WHERE id = ?";
+            stmt1 = conn.prepareStatement(sql);
+            stmt1.setString(1, id);
+            stmt1.executeUpdate();
+            stmt1.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        try {
+            String sql = "DELETE FROM FILM_RELATION WHERE movieId = ?";
+            stmt1 = conn.prepareStatement(sql);
+            stmt1.setString(1, id);
+            stmt1.executeUpdate();
+            stmt1.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        try {
+            String sql = "DELETE FROM MEDIA WHERE id = ?";
+            stmt1 = conn.prepareStatement(sql);
+            stmt1.setString(1, id);
+            stmt1.executeUpdate();
+            stmt1.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -965,13 +934,46 @@ public class Menu {
     public static void deleteAudiobookDatabase(String name) {
         Connection conn = Database.c;
         PreparedStatement stmt1 = null;
+        ResultSet results = null;
+        String id = "";
         try {
-            String sql = "DELETE FROM AUDIOBOOK WHERE name = ?;";
+            String sql = "SELECT id FROM AUDIOBOOK WHERE name = ?;";
             stmt1 = conn.prepareStatement(sql);
             stmt1.setString(1, name);
-            stmt1.executeUpdate();
+            results = stmt1.executeQuery();
+            id = results.getString(1);
+            results.close();
             stmt1.close();
 
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            String sql = "DELETE FROM AUDIOBOOK WHERE id = ?";
+            stmt1 = conn.prepareStatement(sql);
+            stmt1.setString(1, id);
+            stmt1.executeUpdate();
+            stmt1.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        try {
+            String sql = "DELETE FROM BOOK_AUTHOR WHERE bookId = ?";
+            stmt1 = conn.prepareStatement(sql);
+            stmt1.setString(1, id);
+            stmt1.executeUpdate();
+            stmt1.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        try {
+            String sql = "DELETE FROM MEDIA WHERE id = ?";
+            stmt1 = conn.prepareStatement(sql);
+            stmt1.setString(1, id);
+            stmt1.executeUpdate();
+            stmt1.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
